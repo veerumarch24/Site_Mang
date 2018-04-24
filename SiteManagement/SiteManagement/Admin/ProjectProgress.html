@@ -1,0 +1,95 @@
+﻿<div class="col-xs-12 col-md-12" ng-controller="Site_ProgressCtrl">
+    <section class="right-content">
+        <div class="row top-row-strip">
+            <div class="col-md-10">
+                <ol class="breadcrumb">
+                    <li>Masters</li>
+                    <li class="active">{{Header}}</li>
+                </ol>
+            </div>
+            <div class="col-md-2">
+                <ol class="breadcrumb"><li class="active"><a class="active" style="color:white;font-weight:bold" ng-click="ShowReport()">Go To Report</a></li></ol>
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-6">
+            <form name="Form_CreateSiteProgressFilter" novalidate>
+                <div>
+
+                    <div class="row form-group">
+                        <div class="col-md-6 control-label">
+                            <label>Site Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select ng-model="SiteID" name="SiteID" class="form-control" ng-required="true" ng-options="a.Value as a.Text for a in Sites">
+                                <option value="" style="display:none">Select Site Name</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 control-label">
+                            <label>Dated</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="Dated" is-open="ODOD.opened" ng-click="DoD($event)"
+                                   min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" name="Dated" placeholder="Select Date"
+                                   show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" ng-required="true" />
+                            <span class="input-calendar" ng-click="DoD($event)"></span>
+
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 control-label">
+                            <label>No. of Permanent Labours</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="Perm_Labours" ng-model="Perm_Labours" class="form-control" ng-required="true" ng-focus="name.focus=true" ng-blur="name.focus=false">
+                            
+                        </div>
+                    </div>
+                    <div class="row form-group" >
+                        <div class="col-md-6 control-label">
+                            <label>No. of Contract Labours</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="Cont_Labours" ng-model="Cont_Labours" class="form-control" ng-required="true" ng-focus="name.focus=true" ng-blur="name.focus=false">
+                          
+                        </div>
+                    </div>
+                    <div class="row form-group" >
+                        <div class="col-md-6 control-label">
+                            <label>No. of Daily Labours</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="Daily_Labours" ng-model="Daily_Labours" class="form-control" ng-required="true" ng-focus="name.focus=true" ng-blur="name.focus=false">
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="row form-group">
+                        <div class="col-md-6 control-label">
+                            <label>Comments</label>
+                        </div>
+                        <div class="col-md-6">
+                            <textarea name="Comments" style="height: 70px; width: 300px" ng-model="Comments" class="form-control"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-6 control-label">
+                            <label>Image Upload</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="file" file-model="myFile" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <button type="button" id="btnback" ng-show="ShowHideCreate" ng-click="Insert_Pro();" ng-disabled="Form_CreateSiteProgressFilter.$invalid" class="btn btn-primary btn-sm">Create</button>
+                        <button type="button" id="btnback" ng-show="ShowHideUpdate" ng-click="Update_Pro();" ng-disabled="Form_CreateSiteProgressFilter.$invalid" class="btn btn-primary btn-sm">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

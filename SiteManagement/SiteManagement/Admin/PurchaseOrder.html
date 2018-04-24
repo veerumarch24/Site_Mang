@@ -1,0 +1,311 @@
+﻿<div ng-controller="POCtrl">
+    <section class="right-content">
+        <div class="row top-row-strip">
+            <div class="col-md-10">
+                <ol class="breadcrumb">
+                    <li>Site Manager</li>
+                    <li class="active">Purchase Order</li>
+                </ol>
+            </div>
+            <div class="col-md-2">
+                <ol class="breadcrumb"><li class="active"><a class="active" style="color:white;font-weight:bold" ng-click="ShowReport()">Go To Report</a></li></ol>
+            </div>
+        </div>
+        <div class="page-content portlet light">
+            <div class="row col-md-12 form-group">
+                <form class="filter" name="Form_SalesOrders" novalidate>
+                    <div>
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <h5 class="modal-title" style="font-weight: bold;">Ref. & Contact Details : </h5>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Ref No</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="MainRef" ng-model="MainRef" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <label>Dated</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="Dated" is-open="SDOD.opened" ng-click="SoD($event)"
+                                       datepicker-options="dateOptions" name="Dated" placeholder="Select Date"
+                                       show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" ng-required="true" />
+                                <span class="input-calendar" ng-click="SoD($event)"></span>
+                                <div ng-show="Form_CreditRequest.StartDate.$invalid && !Form_CreditRequest.StartDate.$pristine" class="validation_info">
+                                    <ul class="ulvalid">
+                                        <li class="invalid" ng-show="Form_CreditRequest.StartDate.$invalid">Dated is required.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Expected Delivery Date</label>
+                            </div>
+                            <div class="col-md-4">
+                                
+                                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="ExpectedDeliveryDate" is-open="EDOD.opened" ng-click="EoD($event)"
+                                        datepicker-options="dateOptions" name="ExpectedDeliveryDate" placeholder="Select Date"
+                                       show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" />
+                                <span class="input-calendar" ng-click="EoD($event)"></span>
+                                <div ng-show="Form_CreditRequest.EndDate.$invalid && !Form_CreditRequest.EndDate.$pristine" class="validation_info">
+                                    <ul class="ulvalid">
+                                        <li class="invalid" ng-show="Form_CreditRequest.EndDate.$invalid">Dated is required.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <label>MainContact</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="MainContact" ng-model="MainContact" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Mobile</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="Mobile" ng-model="Mobile" ng-pattern="/^[0-9]/" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <label>Email ID</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="EmailID" ng-model="EmailID" class="form-control" ng-pattern="/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})$/" ng-required="true">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <h5 class="modal-title" style="font-weight: bold;">To Address : </h5>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Name</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="Name" ng-model="Name" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <label>Shop No</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="ShopNo" ng-model="ShopNo" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Area</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="Area" ng-model="Area" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <label>City</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="City" ng-model="City" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>State</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="State" ng-model="State" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <label>PinCode</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="PinCode" ng-pattern="/^[0-9]/" ng-model="PinCode" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>GSTINNO</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="GSTINNO" ng-model="GSTINNO" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <h5 class="modal-title" style="font-weight: bold;">Subject : </h5>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Subject</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="Subject" ng-model="Subject" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <label>RefNo</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="RefNo" ng-model="RefNo" class="form-control" ng-required="true">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Comments</label>
+                            </div>
+                            <div class="col-md-10">
+                                <textarea name="Comments" style="height:50px" ng-model="Comments" rows="4" class="form-control" ng-required="true"></textarea>
+                            </div>
+
+                        </div>
+
+                        
+                    </div>
+                </form>
+                
+                    <div>
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <h5 class="modal-title" style="font-weight: bold;">Items : </h5>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Description</label>
+                            </div>
+                            <div class="col-md-10">
+                                <textarea name="Description" style="height:50px" ng-model="Description" rows="4" class="form-control" ng-required="true"></textarea>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2 control-label">
+                                <label>Unit</label>
+                            </div>
+                            <div class="col-md-2">
+                                <select ng-options="a.Text as a.Text for a in Units" ng-model="Unit" name="Unit" class="form-control" ng-required="true">
+                                    <option value="" style=" display:none">
+                                        Select Unit
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-1 control-label">
+                                <label>Qty</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="Qty" ng-model="Qty" maxlength="5" ng-pattern="/^[0-9]/" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-2 control-label">
+                                <label>Rate Per Unit</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" name="Rate" ng-model="Rate" maxlength="9" ng-pattern="/^[0-9]/" class="form-control" ng-required="true">
+                            </div>
+                            <div class="col-md-1">
+                                <button type="submit" class="btn btn-primary btn-sm" ng-click="AddItems()">
+                                    ADD
+                                </button>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                
+            </div>
+            <div class="row" ng-show="Addprds">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped">
+                            <tr>
+
+                                <th>Description</th>
+                                <th>Unit</th>
+                                <th>Qty</th>
+                                <th>Rate Per Unit</th>
+                                <th>Delete</th>
+                            </tr>
+                            <tr ng-repeat="tPO in SelectItemsList track by $index">
+                                <td width="500px" class="label-left">{{tPO.Description}}</td>
+                                <td class="label-left">{{tPO.Unit}}</td>
+                                <td class="label-right">{{tPO.Qty}}</td>
+                                <td width="200px" class="label-right">{{tPO.Rate}}</td>                                
+                                <td class="label-center"><a ng-click="DeleteItem(tPO)"><i class="fa fa-trash-o"></a></td>
+                            </tr>
+                        </table>
+
+                    </div>
+            </div>
+            <div class="row">
+                <hr />
+            </div>
+
+            <div>
+                <div class="row form-group">
+                    <div class="col-md-10">
+                        <h5 class="modal-title" style="font-weight: bold;">Terms & Conditions :</h5>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2 control-label">
+                        <label>Type</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select ng-options="a.Text as a.Text for a in TermTypes" ng-model="Type" name="Type" class="form-control" ng-required="true">
+                            <option value="" style=" display:none">
+                                Select Terms & Conditions
+                            </option>
+                        </select>
+                        
+                    </div>
+                    <div class="col-md-2 control-label">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="TermDescription" ng-model="TermDescription" class="form-control" ng-required="true">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-primary btn-sm" ng-click="AddTerms()">
+                            ADD
+                        </button>
+                    </div>
+                </div>
+
+                
+            </div>
+
+            <div class="row" ng-show="Add_Terms">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Delete</th>
+                        </tr>
+                        <tr ng-repeat="tPO in SelectTermsList track by $index">
+                            <td width="500px" class="label-left">{{tPO.Type}}</td>
+                            <td class="label-left">{{tPO.TermDescription}}</td>
+                            <td class="label-center"><a ng-click="DeleteTerms(tPO)"><i class="fa fa-trash-o"></a></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-offset-6 col-md-2">
+                    <!--<button type="submit" class="btn btn-default" ng-click="ResetOrder()">Reset</button>-->
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary btn-sm" ng-click="ItemsConfirm()">Submit</button>
+                </div>
+                <div class="col-md-2">
+                    <img ng-show="addprdloader" src="../Images/loading.gif" class="loading" />
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>

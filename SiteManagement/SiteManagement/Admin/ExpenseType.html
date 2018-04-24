@@ -1,0 +1,57 @@
+﻿<div class="col-xs-12 col-md-12" ng-controller="ExpenseCtrl">
+    <section class="right-content">
+        <div class="row top-row-strip">
+            <div class="col-md-10">
+                <ol class="breadcrumb">
+                    <li>Masters</li>
+                    <li class="active">{{Header}}</li>
+                </ol>
+            </div>
+            <div class="col-md-2">
+                <ol class="breadcrumb"><li class="active"><a class="active" style="color:red;font-weight:bold" ng-click="ShowReport()">Go To Report</a></li></ol>
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-6">
+            <form name="Form_Create" novalidate>
+                <div>
+                    <div class="row form-group" ng-class="{ 'has-error' : Form_Create.ExpanseType.$invalid && !Form_Create.ExpanseType.$pristine }">
+                        <div class="col-md-4 control-label">
+                            <label>Expense Type</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" ng-disabled="readonly" name="ExpenseType" ng-model="ExpenseType" class="form-control" ng-required="true">
+                            <div ng-show="Form_Create.txtExpanseTypeName.$invalid && !Form_Create.ExpanseType.$pristine && ExpanseType.focus" class="validation_info">
+                                <ul class="ulvalid">
+                                    <li class="invalid" ng-show="Form_Create.ExpanseType.$invalid">Expense Type is required.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Expense Descr</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="ExpenseDescr" ng-model="ExpenseDescr" class="form-control">
+
+                        </div>
+                    </div>
+                    <div class="row form-group" ng-show="SHDropDown">
+                        <div class="col-md-4 control-label">
+                            <label>Status</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select ng-options="s.Value as s.Text for s in Status" ng-model="Stat" class="form-control" id="ddlStatus" name="StatusVal" ng-required="true"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <button type="button" id="btnback" ng-show="ShowHideCreate" ng-click="Insert_Pro();" ng-disabled="Form_Create.$invalid" class="btn btn-primary btn-sm">Create</button>
+                        <button type="button" id="btnback" ng-show="ShowHideUpdate" ng-click="Update_Pro();" ng-disabled="Form_Create.$invalid" class="btn btn-primary btn-sm">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

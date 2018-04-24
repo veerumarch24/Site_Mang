@@ -1,0 +1,174 @@
+﻿
+<section class="right-content" ng-controller="PORptCtrl">
+    <div class="row top-row-strip">
+        <div class="col-md-10">
+            <ol class="breadcrumb">
+                <li>Reports</li>
+                <li class="active">{{Header}}</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-md-8" ng-class="{ 'has-error' : MenuForm.txtFromdate.$invalid && !MenuForm.txtFromdate.$pristine && MenuForm.txtTodate.$invalid && !MenuForm.txtTodate.$pristine }">
+            <div class="col-md-1"><div class="radio"><label class="control-label">From </label></div></div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="txtFromdate" is-open="fromdatests.opened" ng-click="fromtoRequired && openfromdatests($event)"
+                       min-date="minDate" max-date="frommaxDate" datepicker-options="dateOptions" placeholder="Select Fromdate"
+                       show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" />
+                <span class="input-calendar" ng-click="fromtoRequired && openfromdatests($event)"></span>
+
+            </div>
+            <div class="col-md-1"><div class="radio"><label class="control-label">To </label></div></div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="txtTodate" is-open="todatests.opened" ng-click="fromtoRequired && opentodatests($event)"
+                       min-date="minDate1" max-date="maxDate" datepicker-options="dateOptions" placeholder="Select Todate"
+                       show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" />
+                <span class="input-calendar" ng-click="fromtoRequired && opentodatests($event)"></span>
+            </div>
+            <div class="col-md-2">
+                <button type="button" id="btnsubmit" ng-click="reqReport()" class="btn btn-primary btn-sm">Submit</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="col-md-8">
+                <label>Items per page:</label>
+            </div>
+            <div class="col-md-4">
+                <input type="number" class="form-control" value="10" min="10" step="10" ng-pattern="/^(0|[1-9][0-9]*)$/" ng-model="ItemsperPage">
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" ng-show="Model" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    Are you Sure..You want to delete this record?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success theam-button btn-xs" ng-click="SDeleteConf();">Yes</button>
+                    <button type="button" class="btn btn-success theam-button btn-xs" ng-click="Cancel();">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 table-responsive">
+            <table class="table table-bordered table-striped ">
+                <tr>
+                    <th ng-click="sortKey ='$id*1'; reverse=!reverse" ng-init="sortKey = '$id*1';reverse = false">
+                        S.No
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-sort':sortKey != '$id*1','glyphicon-sort-by-order-alt':sortKey == '$id*1' && reverse,'glyphicon-sort-by-order':sortKey == '$id*1' && !reverse}"></span>
+                    </th>
+                    <th ng-click="reverse=!reverse ; sortKey='Dated'">
+                        Dated
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-sort':sortKey != 'Dated','glyphicon-sort-by-alphabet-alt':sortKey == 'Dated' && reverse,'glyphicon-sort-by-alphabet':sortKey == 'Dated' && !reverse}"></span>
+                    </th>
+                    <th ng-click="reverse=!reverse ; sortKey='MainRef'">
+                        Main Ref.
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-sort':sortKey != 'MainRef','glyphicon-sort-by-alphabet-alt':sortKey == 'MainRef' && reverse,'glyphicon-sort-by-alphabet':sortKey == 'MainRef' && !reverse}"></span>
+                    </th>
+
+                    <th ng-click="reverse=!reverse ; sortKey='Mobile' ">
+                        Mobile
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-sort':sortKey != 'Mobile','glyphicon-sort-by-alphabet-alt':sortKey == 'Mobile' && reverse,'glyphicon-sort-by-alphabet':sortKey == 'Mobile' && !reverse}"></span>
+                    </th>
+                    <th ng-click="reverse=!reverse ; sortKey='EmailID' ">
+                        Email ID
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-sort':sortKey != 'EmailID','glyphicon-sort-by-alphabet-alt':sortKey == 'EmailID' && reverse,'glyphicon-sort-by-alphabet':sortKey == 'EmailID' && !reverse}"></span>
+                    </th>
+
+                    <th ng-click="reverse=!reverse ; sortKey='Subject' ">
+                        Subject
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-sort':sortKey != 'Subject','glyphicon-sort-by-alphabet-alt':sortKey == 'Subject' && reverse,'glyphicon-sort-by-alphabet':sortKey == 'Subject' && !reverse}"></span>
+                    </th>
+                    <th ng-click="reverse=!reverse ; sortKey='ExpectedDeliveryDate' ">
+                        Expected Delivery Date
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-sort':sortKey != 'ExpectedDeliveryDate','glyphicon-sort-by-order-alt':sortKey == 'ExpectedDeliveryDate' && reverse,'glyphicon-sort-by-order':sortKey == 'ExpectedDeliveryDate' && !reverse}"></span>
+                    </th>
+                    <th ng-click="reverse=!reverse ; sortKey='CreatedByName' ">
+                        Created By
+                        <span class="glyphicon sort-icon" ng-class="{'glyphicon-sort':sortKey != 'CreatedByName','glyphicon-sort-by-order-alt':sortKey == 'CreatedByName' && reverse,'glyphicon-sort-by-order':sortKey == 'CreatedByName' && !reverse}"></span>
+                    </th>
+                    <th>PDF</th>
+                    <th ng-show="{{IsAdmin}} == 1">Edit</th>
+                    <th ng-show="{{IsAdmin}} == 1">Delete</th>
+                </tr>
+                <tr>
+                    <th>
+                        <a ng-click="search=''" class="pointer-sort">
+                            <i class="fa fa-refresh fa-2x" aria-hidden="true"></i>
+                        </a>
+                    </th>
+                    <th>
+                        <input type="text" ng-model="search.Dated" placeholder="Search.." />
+                    </th>
+                    <th>
+                        <input type="text" ng-model="search.MainRef" placeholder="Search.." />
+                    </th>
+
+                    <th>
+                        <input type="text" class="search-txt" ng-model="search.Mobile" placeholder="Search.." />
+                    </th>
+                    <th>
+                        <input type="text" ng-model="search.EmailID" placeholder="Search.." />
+                    </th>
+
+                    <th>
+                        <input type="text" ng-model="search.Subject" placeholder="Search.." />
+                    </th>
+                    <th>
+                        <input type="text" ng-model="search.ExpectedDeliveryDate" placeholder="Search.." />
+                    </th>
+                    <th>
+                        <input type="text" ng-model="search.CreatedByName" placeholder="Search.." />
+                    </th>
+                    <th></th>
+                    <th ng-show="{{IsAdmin}} == 1">
+                    </th>
+                    <th ng-show="{{IsAdmin}} == 1">
+                    </th>
+                </tr>
+                <tr dir-paginate="Rpt in ReportList | filter:search | orderBy:sortKey:reverse | itemsPerPage:ItemsperPage">
+                    <td class="label-center">{{Rpt.$id}}</td>
+                    <td class="label-center">{{Rpt.Dated}}</td>
+                    <td class="label-left">{{Rpt.MainRef}}</td>
+                    <td class="label-left">{{Rpt.Mobile}}</td>
+                    <td class="label-left">{{Rpt.EmailID}}</td>
+                    <td class="label-left">{{Rpt.Subject}} </td>
+                    <td class="label-center">{{Rpt.ExpectedDeliveryDate}}</td>
+                    <td class="label-left">{{Rpt.CreatedByName}}</td>
+                    <td class="label-left">
+                        <a ng-click="generate_PDF(Rpt.POID)"><i class="fa fa-file-pdf-o" style="color:red"></i></a>
+                    </td>
+                    <td ng-show="{{IsAdmin}} == 1" class="label-center">
+                        <a ng-click="Edit(Rpt.POID)" ng-show="Rpt.Flag !='Deleted'"><i class="fa fa-edit fa-1x"></i></a>
+                    </td>
+                    <td ng-show="{{IsAdmin}} == 1" class="label-center">
+                        <a ng-click="Delete(Rpt.POID)" ng-show="obj.IsActive !='Deleted' " data-toggle="modal" data-target="#myModal"><i class="fa fa-trash-o fa-1x"></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <dir-pagination-controls max-size="15" direction-links="true" boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-1">
+            <a><img ng-click="exportToExcel()" src="../Images/excel.png" /></a>
+        </div>
+    </div>
+
+</section>
+

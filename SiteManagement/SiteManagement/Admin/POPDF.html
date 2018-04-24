@@ -1,0 +1,176 @@
+﻿
+<div ng-controller="POPDFCtrl">
+    <a id="abck" ng-click="Back()" >Back</a>
+    <table class="table label-center" width="90%" style="margin:10px auto;padding:10px; border:1px solid #c6c6c6;"
+        <tr>
+            <td class="label-center">
+                <table class="label-center" id="div_print" width="100%">
+                    <tr>
+                        <td>
+                            <table width="100%" style="margin:10px auto;padding:5px;">
+                                <tr>
+                                    <td width=" 50%">
+                                        <img class="img-responsive" width="100" alt="" src="../images/ganapathi.jpg" />
+                                    </td>
+                                    <td width="50%" class="label-right">
+                                        <strong>Telefax : 040-27000232</strong><br>
+                                        Cell : 9949032391<br />
+                                        Email : rsrgew@rediffmail.com
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="label-center">
+                                        <h1 class="label-center bold">
+                                            <span style="color:blue; text-transform:uppercase">   Ganapathi Engineering Works</span>
+                                        </h1>
+                                        <h5><b> H.No. 12-13-241, Street No. 2&15, Tarnaka, Secendrabad - 500 017.</b></h5>
+                                        <hr />
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="margin-left: 30px; width: 90%" class="label-center" id="div_print" width="90%">
+                                <tr class="form-group">
+                                    <td width="50%" class="label-left bold">
+                                        <h5>   Ref: {{MainRef}}</h5>
+                                    </td>
+                                    <td width="50%" class="label-right bold">
+                                        <h5>  Dt: {{Dated}}</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="label-left bold">
+                                        To,<br />
+                                        {{Name}},<br />
+                                        {{ShopNo}},<br />
+                                        {{Area}},<br />
+                                        {{State}}.<br />
+                                        <h4>GSTIN No:{{GSTINNO}}<br /></h4>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table style="margin-left:30px ; width:90%" class="label-center">
+                                <tr class="form-group">
+                                    <td width="100%" class="label-left bold">
+                                        Sub : {{Subject}}
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                        Ref : {{RefNo}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                        <p>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{Comments}}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                        <table style="width: 97%; border-collapse: collapse; ">
+                                            <tr>
+                                                <th style="width: 8%; border: 1px solid gray; text-align: center;">SL. No</th>
+                                                <th style="width: 60%; border: 1px solid gray; text-align: center;">Description</th>
+                                                <th style="width: 10%; border: 1px solid gray; text-align: center;">Unit</th>
+                                                <th style="width: 10%; border: 1px solid gray; text-align: center;">Qty</th>
+                                                <th style="width: 10%; border: 1px solid gray; text-align: center;">Rate per Unit in Rs.</th>
+                                            </tr>
+                                            <tr ng-repeat="tPO in poItems track by $index">
+                                                <td style="width: 8%; border: 1px solid gray; text-align: left;">{{$index+1}}</td>
+                                                <td style="width: 60%; border: 1px solid gray; text-align: left;">{{tPO.Description}}</td>
+                                                <td style="width: 10%; border: 1px solid gray; text-align: center; ">{{tPO.Unit}}</td>
+                                                <td style="width: 10%; border: 1px solid gray; text-align: center; ">{{tPO.Qty}}</td>
+                                                <td style="width: 10%; border: 1px solid gray; text-align: right; ">{{tPO.Rate}}/-</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                        <h4><u>TERMS & CONDITIONS:</u></h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                        <table style="width: 97%;  ">
+                                            <tr ng-repeat="tPO in poIermCondi track by $index">
+                                                <td style="  text-align: left;">{{$index+1}}.</td>
+                                                <td style="width:20%; text-align: left;">{{tPO.Con_Type}}&nbsp; :&nbsp;</td>
+                                                <td style=" text-align: left; ">{{tPO.Con_Descr}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                        <h5>Yours truly,</h5>
+                                        <h5>For Ganapathi Engineering Works</h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                       
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                        (R. Srinivasa Rao),<br />
+                                        Managing Partner.
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold"></td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold"></td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-left bold">
+                                        <hr />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%" class="label-center">
+                                        Regd. Office : Flat No. C-1, Vasant Apartments,Plot No. 82-83, Desai Park, Keshwapur, HUBLI - 580 023.<br />
+                                        Telefax : 0836-2362930 * Cell : 9448472930 * Email : rrkgew@rediffmail.com
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" class="label-left"></td>
+                        <td class="label-right" width="50%">
+                            <a href=""><img src="../images/pdf.png" id="create_pdf" ng-click="generatePDF()" /></a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

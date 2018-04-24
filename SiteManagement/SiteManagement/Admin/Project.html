@@ -1,0 +1,123 @@
+﻿<div class="col-xs-12 col-md-12" ng-controller="SitesCtrl">
+    <section class="right-content">
+        <div class="row top-row-strip">
+            <div class="col-md-10">
+                <ol class="breadcrumb">
+                    <li>Masters</li>
+                    <li class="active">{{Header}}</li>
+                </ol>
+            </div>
+            <div class="col-md-2">
+                <ol class="breadcrumb"><li class="active"><a class="active" style="color:white;font-weight:bold" ng-click="ShowReport()">Report</a></li></ol>
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-6">
+            <form name="Form_CreateSiteFilter" novalidate>
+                <div>
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Project Code</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" ng-disabled="readonly" name="ProjectCode" ng-model="ProjectCode" class="form-control" ng-required="true">
+
+                        </div>
+                    </div>
+                    <div class="row form-group" >
+                        <div class="col-md-4 control-label">
+                            <label>Project Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="ProjectName" ng-model="ProjectName" class="form-control" ng-required="true">
+                           
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Project Cost</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="ProjectCost" ng-model="ProjectCost" class="form-control" ng-required="true">
+
+                        </div>
+                    </div>
+                    <div class="row form-group" ng-class="{ 'has-error' : Form_CreateDailyExpensesFilter.StartDate.$invalid && !Form_CreateDailyExpensesFilter.StartDate.$pristine }">
+                        <div class="col-md-4 control-label">
+                            <label>Start Date</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="StartDate" is-open="SDOD.opened" ng-click="SoD($event)"
+                                   min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" name="StartDate" placeholder="Select Date"
+                                   show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" ng-required="true" />
+                            <span class="input-calendar" ng-click="SoD($event)"></span>
+                            <div ng-show="Form_CreditRequest.StartDate.$invalid && !Form_CreditRequest.StartDate.$pristine" class="validation_info">
+                                <ul class="ulvalid">
+                                    <li class="invalid" ng-show="Form_CreditRequest.StartDate.$invalid">Dated is required.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Expected End Date</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="ExpectedEndDate" is-open="EEDOD.opened" ng-click="EEoD($event)"
+                                   min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" name="ExpectedEndDate" placeholder="Select Date"
+                                   show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" />
+                            <span class="input-calendar" ng-click="EEoD($event)"></span>
+                            <div ng-show="Form_CreditRequest.ExpectedEndDate.$invalid && !Form_CreditRequest.ExpectedEndDate.$pristine" class="validation_info">
+                                <ul class="ulvalid">
+                                    <li class="invalid" ng-show="Form_CreditRequest.ExpectedEndDate.$invalid">Dated is required.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>End Date</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="EndDate" is-open="EDOD.opened" ng-click="EoD($event)"
+                                   min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" name="EndDate" placeholder="Select Date"
+                                   show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" />
+                            <span class="input-calendar" ng-click="EoD($event)"></span>
+                            <div ng-show="Form_CreditRequest.EndDate.$invalid && !Form_CreditRequest.EndDate.$pristine" class="validation_info">
+                                <ul class="ulvalid">
+                                    <li class="invalid" ng-show="Form_CreditRequest.EndDate.$invalid">Dated is required.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Project InCharge</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select ng-model="Incharge" name="Incharge" class="form-control" ng-required="true" ng-options="a.Value as a.Text for a in incharges">
+                                <option value="" style="display:none">Project InCharge</option>
+                            </select>
+
+                        </div>
+                    </div>
+                   
+                    <div class="row form-group" ng-show="SHDropDown">
+                        <div class="col-md-4 control-label">
+                            <label>Status</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select ng-options="s.Value as s.Text for s in Status" ng-model="Stat" class="form-control" id="ddlStatus" name="StatusVal" ng-required="true"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <button type="button" id="btnback" ng-show="ShowHideCreate" ng-click="Insert_Pro();" ng-disabled="Form_CreateSiteFilter.$invalid" class="btn btn-primary btn-sm">Create</button>
+                        <button type="button" id="btnback" ng-show="ShowHideUpdate" ng-click="Update_Pro();" ng-disabled="Form_CreateSiteFilter.$invalid" class="btn btn-primary btn-sm">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

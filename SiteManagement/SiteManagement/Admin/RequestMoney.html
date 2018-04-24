@@ -1,0 +1,68 @@
+﻿<div class="col-xs-12 col-md-12" ng-controller="Req_MoneyCtrl">
+    <section class="right-content">
+        <div class="row top-row-strip">
+            <div class="col-md-10">
+                <ol class="breadcrumb">
+                    <li>Site Manager</li>
+                    <li class="active">{{Header}}</li>
+                </ol>
+            </div>
+            <div class="col-md-2">
+                <ol class="breadcrumb"><li class="active"><a class="active" style="color:white;font-weight:bold" ng-click="ShowReport()">Go To Report</a></li></ol>
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-6">
+            <form name="Form_CreateRequestMoneyFilter" novalidate>
+                <div>
+
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Site Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select ng-model="SiteID" name="SiteID" class="form-control" ng-required="true" ng-options="a.Value as a.Text for a in Sites">
+                                <option value="" style="display:none">Select Site Name</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Expenses Type</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select ng-model="ExpenseType" name="ExpenseType" class="form-control" ng-required="true" ng-options="a.Value as a.Text for a in ExpenseTypes">
+                                <option value="" style="display:none">Select Expanse Type</option>
+                            </select>
+                           
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Amount</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="Amount" ng-model="Amount" class="form-control" ng-required="true" ng-focus="name.focus=true" ng-blur="name.focus=false">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-4 control-label">
+                            <label>Comments</label>
+                        </div>
+                        <div class="col-md-6">
+                            <textarea name="Comments" style="height: 70px; width: 300px" ng-model="Comments" class="form-control"></textarea>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4">
+                        <button type="button" id="btnback" ng-show="ShowHideCreate" ng-click="Insert_Pro();" ng-disabled="Form_CreateRequestMoneyFilter.$invalid" class="btn btn-primary btn-sm">Create</button>
+                        <button type="button" id="btnback" ng-show="ShowHideUpdate" ng-click="Update_Pro();" ng-disabled="Form_CreateRequestMoneyFilter.$invalid" class="btn btn-primary btn-sm">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
