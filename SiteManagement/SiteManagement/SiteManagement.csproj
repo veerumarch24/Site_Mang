@@ -187,6 +187,10 @@
     <Compile Include="Source\Utils\SsConnection.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\Bankers.html" />
+    <Content Include="Admin\BankersRpt.html" />
+    <Content Include="Admin\Customers.html" />
+    <Content Include="Admin\CustomersRpt.html" />
     <Content Include="Admin\DailyExpenses.html" />
     <Content Include="Admin\DailyExpensesRpt.html" />
     <Content Include="Admin\DailyPurchaseRpt.html" />
@@ -200,6 +204,8 @@
     <Content Include="Admin\POPDF.html" />
     <Content Include="Admin\PurchaseOrder.html" />
     <Content Include="Admin\PurchaseOrderRpt.html" />
+    <Content Include="Admin\Railways.html" />
+    <Content Include="Admin\RailwaysRpt.html" />
     <Content Include="Admin\RequestMoney.html" />
     <Content Include="Admin\RequestMoneyRpt.html" />
     <Content Include="Admin\ProjectProgress.html" />
@@ -207,6 +213,8 @@
     <Content Include="Admin\ProjectProgressRpt.html" />
     <Content Include="Admin\Project.html" />
     <Content Include="Admin\ProjectRpt.html" />
+    <Content Include="Admin\Vendors.html" />
+    <Content Include="Admin\VendorsRpt.html" />
     <Content Include="App\AdminApp.js" />
     <Content Include="App\EncriptInfo.js" />
     <Content Include="App\JSFunctions.js" />

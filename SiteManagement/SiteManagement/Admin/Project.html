@@ -1,13 +1,13 @@
-﻿<div class="col-xs-12 col-md-12" ng-controller="SitesCtrl">
+﻿<div class="col-xs-12 col-md-12" ng-controller="ProjectCtrl">
     <section class="right-content">
         <div class="row top-row-strip">
-            <div class="col-md-10">
+            <div class="col-md-11">
                 <ol class="breadcrumb">
-                    <li>Masterss</li>
+                    <li>Masters</li>
                     <li class="active">{{Header}}</li>
                 </ol>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <ol class="breadcrumb"><li class="active"><a class="active" style="color:white;font-weight:bold" ng-click="ShowReport()">Report</a></li></ol>
             </div>
         </div>
@@ -19,17 +19,17 @@
                             <label>Project Code</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" ng-disabled="readonly" name="ProjectCode" ng-model="ProjectCode" class="form-control" ng-required="true">
+                            <input type="text" ng-disabled="readonly" name="ProjectCode" ng-blur="CheckProjectCode()" ng-model="ProjectCode" class="form-control" ng-required="true">
 
                         </div>
                     </div>
-                    <div class="row form-group" >
+                    <div class="row form-group">
                         <div class="col-md-4 control-label">
                             <label>Project Name</label>
                         </div>
                         <div class="col-md-6">
                             <input type="text" name="ProjectName" ng-model="ProjectName" class="form-control" ng-required="true">
-                           
+
                         </div>
                     </div>
                     <div class="row form-group">
@@ -62,13 +62,13 @@
                             <label>Expected End Date</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="ExpectedEndDate" is-open="EEDOD.opened" ng-click="EEoD($event)"
-                                   min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" name="ExpectedEndDate" placeholder="Select Date"
-                                   show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" />
-                            <span class="input-calendar" ng-click="EEoD($event)"></span>
-                            <div ng-show="Form_CreditRequest.ExpectedEndDate.$invalid && !Form_CreditRequest.ExpectedEndDate.$pristine" class="validation_info">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="ExpectedEndDate" is-open="ExpDOD.opened" ng-click="ExpoD($event)"
+                                   min-date="StartDate" datepicker-options="dateOptions" name="ExpectedEndDate" placeholder="Select Date"
+                                   show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" ng-required="true" />
+                            <span class="input-calendar" ng-click="ExpoD($event)"></span>
+                            <div ng-show="Form_CreditRequest.StartDate.$invalid && !Form_CreditRequest.StartDate.$pristine" class="validation_info">
                                 <ul class="ulvalid">
-                                    <li class="invalid" ng-show="Form_CreditRequest.ExpectedEndDate.$invalid">Dated is required.</li>
+                                    <li class="invalid" ng-show="Form_CreditRequest.StartDate.$invalid">Dated is required.</li>
                                 </ul>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="EndDate" is-open="EDOD.opened" ng-click="EoD($event)"
-                                   min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" name="EndDate" placeholder="Select Date"
+                                   min-date="StartDate" datepicker-options="dateOptions" name="EndDate" placeholder="Select Date"
                                    show-button-bar="false" show-weeks="false" formatyear="yyyy" ng-readonly="true" />
                             <span class="input-calendar" ng-click="EoD($event)"></span>
                             <div ng-show="Form_CreditRequest.EndDate.$invalid && !Form_CreditRequest.EndDate.$pristine" class="validation_info">
@@ -95,13 +95,13 @@
                             <label>Project InCharge</label>
                         </div>
                         <div class="col-md-6">
-                            <select ng-model="Incharge" name="Incharge" class="form-control" ng-required="true" ng-options="a.Value as a.Text for a in incharges">
+                            <select ng-model="InCharge" name="InCharge" class="form-control" ng-required="true" ng-options="a.Value as a.Text for a in incharges">
                                 <option value="" style="display:none">Project InCharge</option>
                             </select>
 
                         </div>
                     </div>
-                   
+
                     <div class="row form-group" ng-show="SHDropDown">
                         <div class="col-md-4 control-label">
                             <label>Status</label>

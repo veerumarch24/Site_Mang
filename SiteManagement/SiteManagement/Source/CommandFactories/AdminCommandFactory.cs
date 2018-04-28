@@ -838,6 +838,7 @@ namespace SiteManagement
 					CreateParameter("@VendorName",SqlDbType.VarChar, objEntity.VendorName),
 					CreateParameter("@ContactPersion",SqlDbType.VarChar, objEntity.ContactPersion),
 					CreateParameter("@PhoneNo",SqlDbType.VarChar, objEntity.PhoneNo),
+                    CreateParameter("@EmailID",SqlDbType.VarChar, objEntity.EmailID),
 					CreateParameter("@StreetNo",SqlDbType.VarChar, objEntity.StreetNo),
 					CreateParameter("@Area",SqlDbType.VarChar, objEntity.Area),
 					CreateParameter("@City",SqlDbType.VarChar, objEntity.City),

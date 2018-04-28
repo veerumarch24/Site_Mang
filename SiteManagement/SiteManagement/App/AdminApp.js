@@ -22,11 +22,11 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         .when('/Bankers', { templateUrl: 'Bankers.html' })
         .when('/Customers', { templateUrl: 'Customers.html' })
         .when('/Vendors', { templateUrl: 'Vendors.html' })
+        .when('/Vendors-Report', { templateUrl: 'VendorsRpt.html' })
         .when('/Railways', { templateUrl: 'Railways.html' })
-        .when('/BankersRpt', { templateUrl: 'BankersRpt.html' })
-        .when('/CustomersRpt', { templateUrl: 'CustomersRpt.html' })
-        .when('/VendorsRpt', { templateUrl: 'VendorsRpt.html' })
-        .when('/RailwaysRpt', { templateUrl: 'RailwaysRpt.html' })
+        .when('/Bankers-Report', { templateUrl: 'BankersRpt.html' })
+        .when('/Customers-Report', { templateUrl: 'CustomersRpt.html' })
+        .when('/Railways-Report', { templateUrl: 'RailwaysRpt.html' })
 
 
         .when('/Daily-Expenses', { templateUrl: 'DailyExpenses.html' })
@@ -4505,21 +4505,28 @@ app.controller('POPDFCtrl', function ($scope, $http, dataService) {
 
 app.controller("Bankers_RptCtrl", function ($scope, $http, dataService) {
     dataService.ID = "";
+    $scope.Status = 'Active';
     $scope.Header = "Bankers Report";
     $scope.ItemsperPage = 10;
     $scope.loader = true;
-    var reqReport = {
-        method: 'GET',
-        url: "../api/Site/Get_Bankers",
-        params: { ID: 0, Action: 'ALL', DeletedBy: 0 }
+    
+
+    $scope.StatusChanged = function () {
+
+        var reqReport = {
+            method: 'GET',
+            url: "../api/Site/Get_Bankers",
+            params: { ID: 0, Action: 'ALL', DeletedBy: 0 }
+        };
+        $http(reqReport)
+           .success(function (data) {
+               $scope.ReportList = data.filter(function (element) { return element.Flag == $scope.Status; });
+               $scope.loader = false;
+           });
+
+       
     };
-    $http(reqReport)
-       .success(function (data) {
-           $scope.ReportList = data;
-           $scope.loader = false;
-       });
-
-
+    $scope.StatusChanged();
     $scope.Edit = function (Sid) {
         dataService.ID = Sid;
         window.location.href = "#/Bankers";
@@ -4535,9 +4542,7 @@ app.controller("Bankers_RptCtrl", function ($scope, $http, dataService) {
                 'Designation': Designation,
                 'BankName': BankName,
                 'BranchName': BranchName,
-                'Flag': Flag,
-                'CreatedBy': CreatedBy,
-                'CreatedDate': CreatedDate
+                'Flag': Flag
             });
             sno = sno + 1;
         });
@@ -4575,6 +4580,57 @@ app.controller('BankersCtrl', function ($scope, $http, dataService) {
 
     }
     $scope.ClearAll();
+
+    $scope.LoadDesignation = function () {
+        
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'Designation';
+        $scope.GETCATEParams.Condition = '';
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+               if (data != "") {
+                   $scope.Designations = data;
+               }
+               else {
+                   $scope.Designation = "";
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+
+    }
+    $scope.LoadDesignation();
+
+    $scope.CheckIFSCCODE = function () {
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'CheckIFSCCODE';
+        $scope.GETCATEParams.Condition = $scope.IFSCCODE;
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+
+               if (data != "") {
+                   $scope.IFSCCODE = '';
+                   alertify.alert("IFSC CODE Already Exists");
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+    }
+
     if (isUndefinedOrNull(dataService.ID) != '') {
 
         $scope.readonly = true;
@@ -4615,7 +4671,7 @@ app.controller('BankersCtrl', function ($scope, $http, dataService) {
                 BranchName: $scope.BranchName,
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate
+                CreatedDate: ''
             }
         };
         $http(reqInsertPro)
@@ -4647,7 +4703,7 @@ app.controller('BankersCtrl', function ($scope, $http, dataService) {
                 BranchName: $scope.BranchName,
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate
+                CreatedDate: ''
             }
         };
         $http(reqUpdatePro)
@@ -4670,20 +4726,27 @@ app.controller('BankersCtrl', function ($scope, $http, dataService) {
 
 app.controller("Customers_RptCtrl", function ($scope, $http, dataService) {
     dataService.ID = "";
+    $scope.Status = 'Active';
     $scope.Header = "Customers Report";
     $scope.ItemsperPage = 10;
     $scope.loader = true;
-    var reqReport = {
-        method: 'GET',
-        url: "../api/Site/Get_Customers",
-        params: { ID: 0, Action: 'ALL', DeletedBy: 0 }
-    };
-    $http(reqReport)
-       .success(function (data) {
-           $scope.ReportList = data;
-           $scope.loader = false;
-       });
+    
+    $scope.StatusChanged = function () {
 
+        var reqReport = {
+            method: 'GET',
+            url: "../api/Site/Get_Customers",
+            params: { ID: 0, Action: 'ALL', DeletedBy: 0 }
+        };
+        $http(reqReport)
+           .success(function (data) {
+               $scope.ReportList = data.filter(function (element) { return element.Flag == $scope.Status; });
+               $scope.loader = false;
+           });
+
+
+    };
+    $scope.StatusChanged();
 
     $scope.Edit = function (Sid) {
         dataService.ID = Sid;
@@ -4703,14 +4766,10 @@ app.controller("Customers_RptCtrl", function ($scope, $http, dataService) {
                 'StreetNo': StreetNo,
                 'Area': Area,
                 'City': City,
-                'State': State,
+                'StateName': StateName,
                 'PhoneNo': PhoneNo,
                 'EmailID': EmailID,
-                'Flag': Flag,
-                'CreatedBy': CreatedBy,
-                'CreatedDate': CreatedDate,
-                'UpdatedBy': UpdatedBy,
-                'UpdatedDate': UpdatedDate
+                'Flag': Flag
             });
             sno = sno + 1;
         });
@@ -4729,7 +4788,7 @@ app.controller("Customers_RptCtrl", function ($scope, $http, dataService) {
     }
 });
 app.controller('CustomersCtrl', function ($scope, $http, dataService) {
-
+    $scope.Status = 'Active';
     $scope.Header = "Create Customers";
     $scope.ShowHideUpdate = false;
     $scope.ShowHideCreate = true;
@@ -4756,6 +4815,54 @@ app.controller('CustomersCtrl', function ($scope, $http, dataService) {
 
     }
     $scope.ClearAll();
+
+    $scope.LoadStates = function () {
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'States';
+        $scope.GETCATEParams.Condition = '';
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+
+               if (data != "") {
+                   $scope.States = data;
+
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+    }
+    $scope.LoadStates();
+
+    $scope.CheckCustCode = function () {
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'CheckCustCode';
+        $scope.GETCATEParams.Condition = $scope.CustCode;
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+
+               if (data != "") {
+                   $scope.CustCode = '';
+                   alertify.alert("Customer Code Already Exists");
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+    }
+
     if (isUndefinedOrNull(dataService.ID) != '') {
 
         $scope.readonly = true;
@@ -4780,7 +4887,7 @@ app.controller('CustomersCtrl', function ($scope, $http, dataService) {
                    $scope.State = Response[0]["State"]
                    $scope.PhoneNo = Response[0]["PhoneNo"]
                    $scope.EmailID = Response[0]["EmailID"]
-                   $scope.Stat = Response[0]["Flag"] == 'Active' ? 1 : 0
+                   $scope.Stat = Response[0]["Flag"] == 'Active' ? 0 : 1
                    $scope.CreatedBy = Response[0]["CreatedBy"]
                    $scope.CreatedDate = Response[0]["CreatedDate"]
                    $scope.UpdatedBy = Response[0]["UpdatedBy"]
@@ -4810,9 +4917,9 @@ app.controller('CustomersCtrl', function ($scope, $http, dataService) {
                 EmailID: $scope.EmailID,
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate,
-                UpdatedBy: $scope.UpdatedBy,
-                UpdatedDate: $scope.UpdatedDate
+                CreatedDate: '',
+                UpdatedBy: sessionStorage.getItem("Uid"),
+                UpdatedDate: ''
             }
         };
         $http(reqInsertPro)
@@ -4850,9 +4957,9 @@ app.controller('CustomersCtrl', function ($scope, $http, dataService) {
                 EmailID: $scope.EmailID,
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate,
-                UpdatedBy: $scope.UpdatedBy,
-                UpdatedDate: $scope.UpdatedDate
+                CreatedDate: '',
+                UpdatedBy: sessionStorage.getItem("Uid"),
+                UpdatedDate: ''
             }
         };
         $http(reqUpdatePro)
@@ -5090,6 +5197,7 @@ app.controller('Import_ItemsCtrl', function ($scope, $http, dataService) {
 
 app.controller("Project_RptCtrl", function ($scope, $http, dataService) {
     dataService.ID = "";
+    $scope.Status = 'Active';
     $scope.Header = "Project Report";
     $scope.ItemsperPage = 10;
     $scope.loader = true;
@@ -5100,9 +5208,24 @@ app.controller("Project_RptCtrl", function ($scope, $http, dataService) {
     };
     $http(reqReport)
        .success(function (data) {
-           $scope.ReportList = data;
+           $scope.ReportList = data.filter(function (element) { return element.Flag == $scope.Status; });
            $scope.loader = false;
        });
+
+
+    $scope.StatusChanged = function () {
+
+        var reqReport = {
+            method: 'GET',
+            url: "../api/Site/Get_Project",
+            params: { ID: 0, Action: 'ALL', DeletedBy: 0 }
+        };
+        $http(reqReport)
+           .success(function (data) {
+               $scope.ReportList = data.filter(function (element) { return element.Flag == $scope.Status; });
+               $scope.loader = false;
+           });
+    };
 
 
     $scope.Edit = function (Sid) {
@@ -5124,11 +5247,7 @@ app.controller("Project_RptCtrl", function ($scope, $http, dataService) {
                 'Orderingauthority': Orderingauthority,
                 'ExpectedEndDate': ExpectedEndDate,
                 'ProjectCost': ProjectCost,
-                'Flag': Flag,
-                'CreatedBy': CreatedBy,
-                'CreatedDate': CreatedDate,
-                'UpdatedBy': UpdatedBy,
-                'UpdatedDate': UpdatedDate
+                'Flag': Flag
             });
             sno = sno + 1;
         });
@@ -5146,7 +5265,10 @@ app.controller("Project_RptCtrl", function ($scope, $http, dataService) {
         window.location.href = "#/Project";
     }
 });
-app.controller('ProjectCtrl', function ($scope, $http, dataService) {
+app.controller('ProjectCtrl', function ($scope, $http, $filter, dataService) {
+
+    $scope.Status = [{ Value: 0, Text: 'Active' }, { Value: 1, Text: 'InActive' }];
+    $scope.Stat = 0;
 
     var maxdate = new Date()
     $scope.maxDate = $filter('date')(maxdate, 'MM/dd/yyyy');
@@ -5155,29 +5277,26 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
         $scope.SDOD.opened = true;
     };
 
-    
-
     $scope.SDOD = {
         opened: false
+    };
+
+
+    $scope.EoD = function ($event) {
+        $scope.EDOD.opened = true;
     };
 
     $scope.EDOD = {
         opened: false
     };
 
-    $scope.EoD = function ($event) {
-        $scope.EDOD.opened = true;
+    $scope.ExpoD = function ($event) {
+        $scope.ExpDOD.opened = true;
     };
 
-    $scope.EEDOD = {
+    $scope.ExpDOD = {
         opened: false
     };
-
-    $scope.EEoD = function ($event) {
-        $scope.EEDOD.opened = true;
-    };
-
-
 
     $scope.Header = "Create Project";
     $scope.ShowHideUpdate = false;
@@ -5196,6 +5315,7 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
         $scope.ExpectedEndDate = '';
         $scope.ProjectCost = '';
         $scope.Flag = '';
+        
         $scope.CreatedBy = '';
         $scope.CreatedDate = '';
         $scope.UpdatedBy = '';
@@ -5203,6 +5323,59 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
 
     }
     $scope.ClearAll();
+
+    $scope.LoadInCharges = function () {
+        $scope.incharge = '';
+
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'InCharges';
+        $scope.GETCATEParams.Condition = '';
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+               if (data != "") {
+                   $scope.incharges = data;
+               }
+               else {
+                   $scope.incharge = "";
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+
+    }
+    $scope.LoadInCharges();
+
+    $scope.CheckProjectCode = function ()
+    {
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'CheckProjectCode';
+        $scope.GETCATEParams.Condition = $scope.ProjectCode;
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+               
+               if (data != "") {
+                   $scope.ProjectCode = '';
+                   alertify.alert("Project Code Already Exists");
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+    }
+
     if (isUndefinedOrNull(dataService.ID) != '') {
 
         $scope.readonly = true;
@@ -5225,7 +5398,8 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
                    $scope.Orderingauthority = Response[0]["Orderingauthority"]
                    $scope.ExpectedEndDate = Response[0]["ExpectedEndDate"]
                    $scope.ProjectCost = Response[0]["ProjectCost"]
-                   $scope.Stat = Response[0]["Flag"] == 'Active' ? 1 : 0
+                   $scope.Stat = Response[0]["Flag"] == 'Active' ? 0 : 1
+
                    $scope.CreatedBy = Response[0]["CreatedBy"]
                    $scope.CreatedDate = Response[0]["CreatedDate"]
                    $scope.UpdatedBy = Response[0]["UpdatedBy"]
@@ -5238,6 +5412,20 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
     }
 
     $scope.Insert_Pro = function () {
+
+        var SDop = new Date($scope.StartDate)
+        $scope.SDate = $filter('date')(SDop, 'MM-dd-yyyy');
+
+        var ExpDop = new Date($scope.ExpectedEndDate)
+        $scope.ExpDate = $filter('date')(ExpDop, 'MM-dd-yyyy');
+
+        if ($scope.EndDate != '') {
+            var EDop = new Date($scope.EndDate)
+            $scope.EDate = $filter('date')(EDop, 'MM-dd-yyyy');
+        }
+        else {$scope.EDate ='' }
+
+
         var reqInsertPro = {
             method: 'POST',
             url: "../api/Site/Insert_Update_Project",
@@ -5246,22 +5434,22 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
                 ProjectCode: $scope.ProjectCode,
                 ProjectName: $scope.ProjectName,
                 InCharge: $scope.InCharge,
-                StartDate: $scope.StartDate,
-                EndDate: $scope.EndDate,
-                Orderingauthority: $scope.Orderingauthority,
-                ExpectedEndDate: $scope.ExpectedEndDate,
+                StartDate: $scope.SDate,
+                EndDate: $scope.EDate,
+                Orderingauthority: $scope.InCharge,
+                ExpectedEndDate: $scope.ExpDate,
                 ProjectCost: $scope.ProjectCost,
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate,
-                UpdatedBy: $scope.UpdatedBy,
-                UpdatedDate: $scope.UpdatedDate
+                CreatedDate: '',
+                UpdatedBy: sessionStorage.getItem("Uid"),
+                UpdatedDate: ''
             }
         };
         $http(reqInsertPro)
            .success(function (Response) {
                if (Response[0]["cnt"] == -1) {
-                   alertify.alert("Project Should Be Unique");
+                   alertify.alert("Project Code Already Exists");
                }
                else {
                    alertify.alert("Project Created");
@@ -5276,6 +5464,68 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
 
     $scope.Update_Pro = function () {
 
+        var SDop = new Date($scope.StartDate)
+        if (SDop == "Invalid Date") {
+            var partsDOB = $scope.StartDate.split('/');
+            $scope.Editday = partsDOB[0];
+            $scope.Editmonth = partsDOB[1];
+            $scope.Edityear = partsDOB[2];
+            var Emonth = $scope.Editmonth;
+            var Eday = $scope.Editday;
+            var Eyear = $scope.Edityear;
+            $scope.SDate = Emonth + '-' + Eday + '-' + Eyear
+        }
+        else {
+            $scope.SDate = $filter('date')(SDop, 'MM-dd-yyyy');
+        }
+
+
+
+        if ($scope.EndDate != '' && $scope.EndDate != null) {
+            var EDop = new Date($scope.EndDate)
+
+            if (EDop == "Invalid Date") {
+                var partsDOB = $scope.EndDate.split('/');
+                $scope.Editday = partsDOB[0];
+                $scope.Editmonth = partsDOB[1];
+                $scope.Edityear = partsDOB[2];
+                var Emonth = $scope.Editmonth;
+                var Eday = $scope.Editday;
+                var Eyear = $scope.Edityear;
+                $scope.EDate = Emonth + '-' + Eday + '-' + Eyear
+            }
+            else {
+                $scope.EDate = $filter('date')(EDop, 'MM-dd-yyyy');
+            }
+        }
+        else {
+            $scope.EDate = ''
+        }
+
+
+
+        if ($scope.ExpectedEndDate != '' && $scope.ExpectedEndDate != null) {
+            var EDop = new Date($scope.ExpectedEndDate)
+
+            if (EDop == "Invalid Date") {
+                var partsDOB = $scope.ExpectedEndDate.split('/');
+                $scope.Editday = partsDOB[0];
+                $scope.Editmonth = partsDOB[1];
+                $scope.Edityear = partsDOB[2];
+                var Emonth = $scope.Editmonth;
+                var Eday = $scope.Editday;
+                var Eyear = $scope.Edityear;
+                $scope.ExpDate = Emonth + '-' + Eday + '-' + Eyear
+            }
+            else {
+                $scope.ExpDate = $filter('date')(EDop, 'MM-dd-yyyy');
+            }
+        }
+        else {
+            $scope.EDate = ''
+        }
+
+
         var reqUpdatePro = {
             method: 'POST',
             url: "../api/Site/Insert_Update_Project",
@@ -5284,16 +5534,16 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
                 ProjectCode: $scope.ProjectCode,
                 ProjectName: $scope.ProjectName,
                 InCharge: $scope.InCharge,
-                StartDate: $scope.StartDate,
-                EndDate: $scope.EndDate,
-                Orderingauthority: $scope.Orderingauthority,
-                ExpectedEndDate: $scope.ExpectedEndDate,
+                StartDate: $scope.SDate,
+                EndDate: $scope.EDate,
+                Orderingauthority: $scope.InCharge,
+                ExpectedEndDate: $scope.ExpDate,
                 ProjectCost: $scope.ProjectCost,
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate,
-                UpdatedBy: $scope.UpdatedBy,
-                UpdatedDate: $scope.UpdatedDate
+                CreatedDate: '',
+                UpdatedBy: sessionStorage.getItem("Uid"),
+                UpdatedDate: ''
             }
         };
         $http(reqUpdatePro)
@@ -5315,19 +5565,28 @@ app.controller('ProjectCtrl', function ($scope, $http, dataService) {
 
 app.controller("Railways_RptCtrl", function ($scope, $http, $filter, dataService) {
     dataService.ID = "";
+    $scope.Status = 'Active';
     $scope.Header = "Railways Report";
     $scope.ItemsperPage = 10;
     $scope.loader = true;
-    var reqReport = {
-        method: 'GET',
-        url: "../api/Site/Get_Railways",
-        params: { ID: 0, Action: 'ALL', DeletedBy: 0 }
+    
+    $scope.StatusChanged = function () {
+
+        var reqReport = {
+            method: 'GET',
+            url: "../api/Site/Get_Railways",
+            params: { ID: 0, Action: 'ALL', DeletedBy: 0 }
+        };
+        $http(reqReport)
+           .success(function (data) {
+               $scope.ReportList = data.filter(function (element) { return element.Flag == $scope.Status; });
+               $scope.loader = false;
+           });
+
+
     };
-    $http(reqReport)
-       .success(function (data) {
-           $scope.ReportList = data;
-           $scope.loader = false;
-       });
+    $scope.StatusChanged();
+
 
 
     $scope.Edit = function (Sid) {
@@ -5345,11 +5604,7 @@ app.controller("Railways_RptCtrl", function ($scope, $http, $filter, dataService
                 'Area': Area,
                 'City': City,
                 'Comments': Comments,
-                'Flag': Flag,
-                'CreatedBy': CreatedBy,
-                'CreatedDate': CreatedDate,
-                'UpdatedBy': UpdatedBy,
-                'UpdatedDate': UpdatedDate
+                'Flag': Flag
             });
             sno = sno + 1;
         });
@@ -5389,6 +5644,30 @@ app.controller('RailwaysCtrl', function ($scope, $http, dataService) {
 
     }
     $scope.ClearAll();
+
+    $scope.CheckRailwayCode = function () {
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'CheckRailwayCode';
+        $scope.GETCATEParams.Condition = $scope.RailwayCode;
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+
+               if (data != "") {
+                   $scope.RailwayCode = '';
+                   alertify.alert("Railway Code Already Exists");
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+    }
+
     if (isUndefinedOrNull(dataService.ID) != '') {
 
         $scope.readonly = true;
@@ -5407,7 +5686,7 @@ app.controller('RailwaysCtrl', function ($scope, $http, dataService) {
                    $scope.Area = Response[0]["Area"]
                    $scope.City = Response[0]["City"]
                    $scope.Comments = Response[0]["Comments"]
-                   $scope.Stat = Response[0]["Flag"] == 'Active' ? 1 : 0
+                   $scope.Stat = Response[0]["Flag"] == 'Active' ? 0 : 1
                    $scope.CreatedBy = Response[0]["CreatedBy"]
                    $scope.CreatedDate = Response[0]["CreatedDate"]
                    $scope.UpdatedBy = Response[0]["UpdatedBy"]
@@ -5428,12 +5707,12 @@ app.controller('RailwaysCtrl', function ($scope, $http, dataService) {
                 RailwayCode: $scope.RailwayCode,
                 Area: $scope.Area,
                 City: $scope.City,
-                Comments: $scope.Comments,
+                Comments: '',
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate,
-                UpdatedBy: $scope.UpdatedBy,
-                UpdatedDate: $scope.UpdatedDate
+                CreatedDate: '',
+                UpdatedBy: sessionStorage.getItem("Uid"),
+                UpdatedDate: ''
             }
         };
         $http(reqInsertPro)
@@ -5462,12 +5741,12 @@ app.controller('RailwaysCtrl', function ($scope, $http, dataService) {
                 RailwayCode: $scope.RailwayCode,
                 Area: $scope.Area,
                 City: $scope.City,
-                Comments: $scope.Comments,
+                Comments: '',
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate,
-                UpdatedBy: $scope.UpdatedBy,
-                UpdatedDate: $scope.UpdatedDate
+                CreatedDate: '',
+                UpdatedBy: sessionStorage.getItem("Uid"),
+                UpdatedDate: ''
             }
         };
         $http(reqUpdatePro)
@@ -5490,6 +5769,7 @@ app.controller('RailwaysCtrl', function ($scope, $http, dataService) {
 
 
 app.controller("Vendors_RptCtrl", function ($scope, $http, dataService) {
+    $scope.Status = 'Active';
     dataService.ID = "";
     $scope.Header = "Vendors Report";
     $scope.ItemsperPage = 10;
@@ -5501,11 +5781,25 @@ app.controller("Vendors_RptCtrl", function ($scope, $http, dataService) {
     };
     $http(reqReport)
        .success(function (data) {
-           $scope.ReportList = data;
+           $scope.ReportList = data.filter(function (element) { return element.Flag == $scope.Status; });
            $scope.loader = false;
        });
 
+    $scope.StatusChanged = function () {
 
+        var reqReport = {
+            method: 'GET',
+            url: "../api/Site/Get_Vendors",
+            params: { ID: 0, Action: 'ALL', DeletedBy: 0 }
+        };
+        $http(reqReport)
+           .success(function (data) {
+               $scope.ReportList = data.filter(function (element) { return element.Flag == $scope.Status; });
+               $scope.loader = false;
+           });
+
+        
+    };
     $scope.Edit = function (Sid) {
         dataService.ID = Sid;
         window.location.href = "#/Vendors";
@@ -5524,12 +5818,8 @@ app.controller("Vendors_RptCtrl", function ($scope, $http, dataService) {
                 'StreetNo': StreetNo,
                 'Area': Area,
                 'City': City,
-                'State': State,
-                'Flag': Flag,
-                'CreatedBy': CreatedBy,
-                'CreatedDate': CreatedDate,
-                'UpdatedBy': UpdatedBy,
-                'UpdatedDate': UpdatedDate
+                'State': StateName,
+                'Flag': Flag
             });
             sno = sno + 1;
         });
@@ -5561,6 +5851,7 @@ app.controller('VendorsCtrl', function ($scope, $http, dataService) {
         $scope.VendorName = '';
         $scope.ContactPersion = '';
         $scope.PhoneNo = '';
+        $scope.EmailID = '';
         $scope.StreetNo = '';
         $scope.Area = '';
         $scope.City = '';
@@ -5573,6 +5864,56 @@ app.controller('VendorsCtrl', function ($scope, $http, dataService) {
 
     }
     $scope.ClearAll();
+
+
+    $scope.LoadStates = function () {
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'States';
+        $scope.GETCATEParams.Condition = '';
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+
+               if (data != "") {
+                   $scope.States = data;
+
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+    }
+    $scope.LoadStates();
+
+    $scope.CheckVendorCode = function () {
+        $scope.GETCATEParams = {};
+        $scope.GETCATEParams.Action = 'CheckVendorCode';
+        $scope.GETCATEParams.Condition = $scope.VendorCode;
+        $scope.GETCATEParams.ItemID = 0;
+
+        var reqCat = {
+            method: 'POST',
+            url: "../api/Site/Dropdown",
+            data: { Info: EncriptInfo(JSON.stringify($scope.GETCATEParams)) }
+        };
+        $http(reqCat)
+           .success(function (data) {
+
+               if (data != "") {
+                   $scope.VendorCode = '';
+                   alertify.alert("Vendor Code Already Exists");
+               }
+           })
+        .error(function (data, status, headers, config) {
+        });
+    }
+
+
     if (isUndefinedOrNull(dataService.ID) != '') {
 
         $scope.readonly = true;
@@ -5591,11 +5932,12 @@ app.controller('VendorsCtrl', function ($scope, $http, dataService) {
                    $scope.VendorName = Response[0]["VendorName"]
                    $scope.ContactPersion = Response[0]["ContactPersion"]
                    $scope.PhoneNo = Response[0]["PhoneNo"]
+                   $scope.EmailID = Response[0]["EmailID"]
                    $scope.StreetNo = Response[0]["StreetNo"]
                    $scope.Area = Response[0]["Area"]
                    $scope.City = Response[0]["City"]
                    $scope.State = Response[0]["State"]
-                   $scope.Stat = Response[0]["Flag"] == 'Active' ? 1 : 0
+                   $scope.Stat = Response[0]["Flag"] == 'Active' ? 0 : 1
                    $scope.CreatedBy = Response[0]["CreatedBy"]
                    $scope.CreatedDate = Response[0]["CreatedDate"]
                    $scope.UpdatedBy = Response[0]["UpdatedBy"]
@@ -5617,15 +5959,16 @@ app.controller('VendorsCtrl', function ($scope, $http, dataService) {
                 VendorName: $scope.VendorName,
                 ContactPersion: $scope.ContactPersion,
                 PhoneNo: $scope.PhoneNo,
+                EmailID:$scope.EmailID,
                 StreetNo: $scope.StreetNo,
                 Area: $scope.Area,
                 City: $scope.City,
                 State: $scope.State,
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate,
-                UpdatedBy: $scope.UpdatedBy,
-                UpdatedDate: $scope.UpdatedDate
+                CreatedDate: '',
+                UpdatedBy: sessionStorage.getItem("Uid"),
+                UpdatedDate: ''
             }
         };
         $http(reqInsertPro)
@@ -5655,15 +5998,16 @@ app.controller('VendorsCtrl', function ($scope, $http, dataService) {
                 VendorName: $scope.VendorName,
                 ContactPersion: $scope.ContactPersion,
                 PhoneNo: $scope.PhoneNo,
+                EmailID: $scope.EmailID,
                 StreetNo: $scope.StreetNo,
                 Area: $scope.Area,
                 City: $scope.City,
                 State: $scope.State,
                 Flag: $scope.Stat,
                 CreatedBy: sessionStorage.getItem("Uid"),
-                CreatedDate: $scope.CreatedDate,
-                UpdatedBy: $scope.UpdatedBy,
-                UpdatedDate: $scope.UpdatedDate
+                CreatedDate: '',
+                UpdatedBy: sessionStorage.getItem("Uid"),
+                UpdatedDate: ''
             }
         };
         $http(reqUpdatePro)

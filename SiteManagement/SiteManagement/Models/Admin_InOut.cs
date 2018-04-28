@@ -471,11 +471,13 @@ namespace SiteManagement
 
     public class Bankers
     {
+        public int ID { get; set; }
         public string action { get; set; }
         public string result { get; set; }
         public string Flag { get; set; }
         public string IFSCCODE { get; set; }
         public int Designation { get; set; }
+        public string Designation_Desc { get; set; }
         public string BankName { get; set; }
         public string BranchName { get; set; }
         public int CreatedBy { get; set; }
@@ -485,6 +487,7 @@ namespace SiteManagement
 
     public class Customers
     {
+        public int ID { get; set; }
         public string action { get; set; }
         public string result { get; set; }
         public string Flag { get; set; }
@@ -496,6 +499,7 @@ namespace SiteManagement
         public string Area { get; set; }
         public string City { get; set; }
         public int State { get; set; }
+        public string StateName { get; set; }
         public string PhoneNo { get; set; }
         public string EmailID { get; set; }
         public int CreatedBy { get; set; }
@@ -529,12 +533,14 @@ namespace SiteManagement
     }
     public class Project
     {
+        public Int32 ID { get; set; }
         public string action { get; set; }
         public string result { get; set; }
         public string Flag { get; set; }
         public string ProjectCode { get; set; }
         public string ProjectName { get; set; }
         public int InCharge { get; set; }
+        public string InchargeName { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public string Orderingauthority { get; set; }
@@ -548,6 +554,7 @@ namespace SiteManagement
     }
     public class Railways
     {
+        public int ID { get; set; }
         public string action { get; set; }
         public string result { get; set; }
         public string Flag { get; set; }
@@ -563,6 +570,7 @@ namespace SiteManagement
     }
     public class Vendors
     {
+        public int ID { get; set; }
         public string action { get; set; }
         public string result { get; set; }
         public string Flag { get; set; }
@@ -570,9 +578,11 @@ namespace SiteManagement
         public string VendorName { get; set; }
         public string ContactPersion { get; set; }
         public string PhoneNo { get; set; }
+        public string EmailID { get; set; }
         public string StreetNo { get; set; }
         public string Area { get; set; }
         public string City { get; set; }
+        public string StateName { get; set; }
         public int State { get; set; }
         public int CreatedBy { get; set; }
         public string CreatedDate { get; set; }

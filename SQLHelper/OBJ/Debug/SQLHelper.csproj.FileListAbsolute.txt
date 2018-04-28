@@ -835,3 +835,4 @@ E:\Projects\SiteManagements\Site_Mang\SQLHelper\bin\Debug\SQLHelper.dll
 E:\Projects\SiteManagements\Site_Mang\SQLHelper\bin\Debug\SQLHelper.pdb
 E:\Projects\SiteManagements\Site_Mang\SQLHelper\obj\Debug\SQLHelper.dll
 E:\Projects\SiteManagements\Site_Mang\SQLHelper\obj\Debug\SQLHelper.pdb
+E:\Projects\SiteManagements\Site_Mang\SQLHelper\obj\Debug\SQLHelper.csprojResolveAssemblyReference.cache

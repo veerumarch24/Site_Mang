@@ -762,7 +762,7 @@ namespace SiteManagement.Controllers
         #region Vendors
 
         [System.Web.Mvc.HttpPost]
-        public List<Vendors> Insert_Update_Vendors(String action, String VendorCode, String VendorName, String ContactPersion, String PhoneNo, String StreetNo, String Area, String City, String State, String Flag, String CreatedBy, String CreatedDate, String UpdatedBy, String UpdatedDate)
+        public List<Vendors> Insert_Update_Vendors(String action, String VendorCode, String VendorName, String ContactPersion, String PhoneNo,string EmailID, String StreetNo, String Area, String City, String State, String Flag, String CreatedBy, String CreatedDate, String UpdatedBy, String UpdatedDate)
         {
             Vendors objEntity = new Vendors();
             objEntity.action = action;
@@ -770,6 +770,7 @@ namespace SiteManagement.Controllers
             objEntity.VendorName = VendorName;
             objEntity.ContactPersion = ContactPersion;
             objEntity.PhoneNo = PhoneNo;
+            objEntity.EmailID = EmailID;
             objEntity.StreetNo = StreetNo;
             objEntity.Area = Area;
             objEntity.City = City;

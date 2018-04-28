@@ -88,9 +88,10 @@ appadminlogin.controller('AdminLoginCtrl', function ($scope, $http, $filter, $wi
     $scope.loader = false;
     $scope.Login = function () {
         $scope.loader = true;
+        
         $http({
             method: 'post',
-            url: '../api/Login/AdminLogin',
+            url: '../api/AdminLogin/AdminLogin',
             headers: { 'Content-Type': 'application/json' },
             data: { Info: EncriptInfo(JSON.stringify($scope.login)) }
         })
@@ -99,6 +100,7 @@ appadminlogin.controller('AdminLoginCtrl', function ($scope, $http, $filter, $wi
            if (parseInt($scope.AdminLogin.Loginid) > 0) {
                sessionStorage.setItem("Uid", $scope.AdminLogin.Loginid);
                sessionStorage.setItem("Admin", $scope.AdminLogin.Username);
+               sessionStorage.setItem("IsAdmin", $scope.AdminLogin.IsAdmin);
                $scope.SessionsInOut();
            }
            else {
@@ -110,8 +112,9 @@ appadminlogin.controller('AdminLoginCtrl', function ($scope, $http, $filter, $wi
 
            $scope.loader = false;
            alertify.alert(response.Message);
-       });
-    };
+       })
+        .error(function (e) { alert(e);});
+        };
     $scope.SessionsInOut = function () {
 
         $scope.UserLoginparams = {};
@@ -122,13 +125,14 @@ appadminlogin.controller('AdminLoginCtrl', function ($scope, $http, $filter, $wi
 
         $http({
             method: 'post',
-            url: '../api/Login/SessionsInOut',
+            url: '../api/AdminLogin/SessionsInOut',
             headers: { 'Content-Type': 'application/json' },
             data: { Info: EncriptInfo(JSON.stringify($scope.UserLoginparams)) }
         })
       .then(function (Response) {          
           sessionStorage.setItem("Sesid", Response.data[0].result);
-          window.location = "Admin.html";
+          
+          window.location = "Admin/Admin.html";
       })
       .catch(function (response) {
           console.log(response);
@@ -136,449 +140,5 @@ appadminlogin.controller('AdminLoginCtrl', function ($scope, $http, $filter, $wi
           alertify.alert(response.Message);
       });
 
-    };
-});
-
-
-var appstoreslogin = angular.module('storesloginApp', []);
-appstoreslogin.factory('$exceptionHandler', function ($injector) {
-    return function (exception, cause) {
-        
-        var $http = $injector.get("$http");
-        var formatted = '';
-        var properties = '';
-        formatted += 'Broser: "' + get_browser_info() + '" ; \n';
-        formatted += 'Location: "' + window.location.href + '" ; \n';
-        formatted += 'Exception: "' + exception.toString() + '"\n';
-        formatted += 'Caused by: ' + cause + '\n';
-        properties += (exception.message) ? 'Message: ' + exception.message + '\n' : ''
-        properties += (exception.fileName) ? 'File Name: ' + exception.fileName + '\n' : ''
-        properties += (exception.lineNumber) ? 'Line Number: ' + exception.lineNumber + '\n' : ''
-        properties += (exception.stack) ? 'Stack Trace: ' + exception.stack + '\n' : ''
-
-        if (properties) {
-            formatted += properties;
-        }
-        if (formatted.toLowerCase().indexOf('/api/') == -1) return;
-        var reqsenderrormsg = {
-            method: 'POST',
-            url: "../api/Login/SendErrorMessage",
-            params: { subject: 'healthywayz', error: formatted }
-        };
-        $http(reqsenderrormsg)
-           .success(function () {
-           });
-    }
-});
-appstoreslogin.factory('errorHttpInterceptor', function ($exceptionHandler, $q) {
-    return {
-        responseError: function responseError(rejection) {
-            $exceptionHandler("An HTTP request error has occurred.\nHTTP config: " + JSON.stringify(rejection.config) + ".\nStatus: " + rejection.status);
-            return $q.reject(rejection);
-        }
-    };
-});
-appstoreslogin.controller('StoresLoginCtrl', function ($scope, $http, $filter) {
-
-    $scope.loader = false;
-    $scope.StoresLogin = function () {
-        
-        $scope.loader = true;
-        $http({
-            method: 'POST',
-            url: '../api/Login/StoresLogin',
-            headers: { 'Content-Type': 'application/json' },
-            data: { Info: EncriptInfo(JSON.stringify($scope.login)) }
-        })
-       .then(function (logindata) {
-           $scope.StoresLogin = logindata.data[0];
-           if (parseInt($scope.StoresLogin.Loginid) > 0) {
-               sessionStorage.setItem("Sid", $scope.StoresLogin.Loginid);
-               sessionStorage.setItem("Stores", $scope.StoresLogin.Username);
-               $scope.SessionsInOut();
-           }
-           else {
-               alertify.alert($scope.StoresLogin.Result);               
-               $scope.loader = false;
-           }
-       })
-       .catch(function (response) {
-
-           $scope.loader = false;
-           alertify.alert(response.Message);
-       });
-    };
-    $scope.SessionsInOut = function () {
-
-        $scope.UserLoginparams = {};
-        $scope.UserLoginparams.action = 'In';
-        $scope.UserLoginparams.loginid = sessionStorage.getItem("Sid");
-        $scope.UserLoginparams.usertype = 'Stores';
-        $scope.UserLoginparams.sesid = makeid();
-
-        $http({
-            method: 'post',
-            url: '../api/Login/SessionsInOut',
-            headers: { 'Content-Type': 'application/json' },
-            data: { Info: EncriptInfo(JSON.stringify($scope.UserLoginparams)) }
-        })
-      .then(function (Response) {          
-          sessionStorage.setItem("Sesid", Response.data[0].result);
-          window.location = "Stores.html";
-      })
-      .catch(function (response) {          
-          $scope.loader = false;
-          alertify.alert(response.Message);
-      });
-
-    };
-
-});
-
-
-var appmemlogin = angular.module('MemloginApp', []);
-appmemlogin.factory('$exceptionHandler', function ($injector) {
-    return function (exception, cause) {
-        var $http = $injector.get("$http");
-        var formatted = '';
-        var properties = '';
-        formatted += 'Broser: "' + get_browser_info() + '" ; \n';
-        formatted += 'Location: "' + window.location.href + '" ; \n';
-        formatted += 'Exception: "' + exception.toString() + '"\n';
-        formatted += 'Caused by: ' + cause + '\n';
-        properties += (exception.message) ? 'Message: ' + exception.message + '\n' : ''
-        properties += (exception.fileName) ? 'File Name: ' + exception.fileName + '\n' : ''
-        properties += (exception.lineNumber) ? 'Line Number: ' + exception.lineNumber + '\n' : ''
-        properties += (exception.stack) ? 'Stack Trace: ' + exception.stack + '\n' : ''
-
-        if (properties) {
-            formatted += properties;
-        }
-
-        if (formatted.toLowerCase().indexOf('/api/') == -1) return;
-        var reqsenderrormsg = {
-            method: 'POST',
-            url: "../api/Login/SendErrorMessage",
-            params: { subject: 'healthywayz', error: formatted }
-        };
-        $http(reqsenderrormsg)
-           .success(function () {
-           });
-    }
-});
-appmemlogin.factory('errorHttpInterceptor', function ($exceptionHandler, $q) {
-    return {
-        responseError: function responseError(rejection) {
-            $exceptionHandler("An HTTP request error has occurred.\nHTTP config: " + JSON.stringify(rejection.config) + ".\nStatus: " + rejection.status);
-            return $q.reject(rejection);
-        }
-    };
-});
-appmemlogin.controller('MemberLoginCtrl', function ($scope, $http) {
-    
-    $scope.loader = false;
-    $scope.DistributorLogin = function () {
-        $scope.loader = true;
-        $http({
-            method: 'post',
-            url: '../api/Login/DistributorLogin',
-            headers: { 'Content-Type': 'application/json' },
-            data: { Info: EncriptInfo(JSON.stringify($scope.login)) }
-        })
-       .then(function (logindata) {
-           $scope.DBLogin = logindata.data[0];
-           if (parseInt($scope.DBLogin.Loginid) > 0) {
-               sessionStorage.setItem("Did", $scope.DBLogin.Loginid);
-               sessionStorage.setItem("DCode", $scope.DBLogin.Username);
-               $scope.SessionsInOut();
-           }
-           else {
-               alertify.alert($scope.DBLogin.Result);
-               $scope.loader = false;
-           }
-       })
-       .catch(function (response) {
-           $scope.loader = false;
-           alertify.alert(response.Message);
-       });
-    };
-    $scope.SessionsInOut = function () {
-        $scope.UserLoginparams = {};
-        $scope.UserLoginparams.action = 'In';
-        $scope.UserLoginparams.loginid = sessionStorage.getItem("Did");
-        $scope.UserLoginparams.usertype = 'Member';
-        $scope.UserLoginparams.sesid = makeid();
-        $http({
-            method: 'post',
-            url: '../api/Login/SessionsInOut',
-            headers: { 'Content-Type': 'application/json' },
-            data: { Info: EncriptInfo(JSON.stringify($scope.UserLoginparams)) }
-        })
-      .then(function (Response) {
-          sessionStorage.setItem("Sesid", Response.data[0].result);
-          window.location = "Distributor.html";
-      })
-      .catch(function (response) {
-          $scope.loader = false;
-          alertify.alert(response.Message);
-      });
-
-    };
-
-    $scope.GetForgetPWD = function () {
-        $('#ShowProfileModal').modal('show');
-    }
-    $scope.CheckUserID = function () {
-        $scope.forgetloader = true;
-        $scope.CheckUserIDParams = {};
-        $scope.CheckUserIDParams.action = 'Profile';
-        $scope.CheckUserIDParams.idno = $scope.txtIdno;
-
-        var reqCheckUserID = {
-            method: 'POST',
-            url: "../api/Admin/CheckUserID",
-            data: { Info: EncriptInfo(JSON.stringify($scope.CheckUserIDParams)) }
-        };
-        $http(reqCheckUserID)
-           .success(function (Response) {
-               $scope.regid = Response[0].regid;
-               if ($scope.regid != "0") {
-                   $scope.GetValue($scope.regid)
-               }
-               else {
-                   $scope.forgetloader = false;
-                   alertify.alert(Response[0].result)
-               };
-           })
-           .error(function (Message) {
-               $scope.forgetloader = false;
-               alertify.alert(Message.Message);
-           });
-    };
-    $scope.GetValue = function (regid) {
-        $scope.getvalparams = {};
-        $scope.getvalparams.table = 'MemberProfiles';
-        $scope.getvalparams.RequiredColumn = 'LPassword';
-        $scope.getvalparams.IdColumn = 'regid';
-        $scope.getvalparams.Id = regid.toString();
-
-        var reqMemberProfile = {
-            method: 'POST',
-            url: "../api/Common/GetValue",
-            data: { Info: EncriptInfo(JSON.stringify($scope.getvalparams)) }
-        };
-        $http(reqMemberProfile)
-           .success(function (Response) {
-               if (isUndefinedOrNull(Response) != '') {
-                   $scope.goegetpwdparams = {};
-                   $scope.goegetpwdparams.regid = regid.toString();
-                   $scope.goegetpwdparams.pwd = Response;
-
-                   var reqforgetpwd = {
-                       method: 'POST',
-                       url: "../api/OpenSite/ForGetPassword",
-                       data: { Info: EncriptInfo(JSON.stringify($scope.goegetpwdparams)) }
-                   };
-                   $http(reqforgetpwd)
-                      .success(function (Result) {
-                          if (isUndefinedOrNull(Result) == '') {
-                              alertify.alert('Login Password Send to your Registered Mobile No.');
-                              $('#ShowProfileModal').modal('hide');
-                              $scope.txtIdno = '';
-                              $scope.forgetloader = false;
-                          }
-                          else {
-                              alertify.alert('SMS Send Error');
-                              $scope.forgetloader = false;
-                          }
-
-                      })
-                      .error(function (Message) {
-                          alertify.alert(Message.Message);
-                          $scope.forgetloader = false;
-                      });
-               }
-           })
-           .error(function (Message) {
-               alertify.alert(Message.Message);
-               $scope.forgetloader = false;
-           });
-    };
-});
-
-
-var appfranchiselogin = angular.module('franchiseloginApp', []);
-appfranchiselogin.factory('$exceptionHandler', function ($injector) {
-    return function (exception, cause) {
-        var $http = $injector.get("$http");
-        var formatted = '';
-        var properties = '';
-        formatted += 'Broser: "' + get_browser_info() + '" ; \n';
-        formatted += 'Location: "' + window.location.href + '" ; \n';
-        formatted += 'Exception: "' + exception.toString() + '"\n';
-        formatted += 'Caused by: ' + cause + '\n';
-        properties += (exception.message) ? 'Message: ' + exception.message + '\n' : ''
-        properties += (exception.fileName) ? 'File Name: ' + exception.fileName + '\n' : ''
-        properties += (exception.lineNumber) ? 'Line Number: ' + exception.lineNumber + '\n' : ''
-        properties += (exception.stack) ? 'Stack Trace: ' + exception.stack + '\n' : ''
-
-        if (properties) {
-            formatted += properties;
-        }
-
-        if (formatted.toLowerCase().indexOf('/api/') == -1) return;
-
-        var reqsenderrormsg = {
-            method: 'POST',
-            url: "../api/Login/SendErrorMessage",
-            params: { subject: 'MIWellness', error: formatted }
-        };
-        $http(reqsenderrormsg)
-           .success(function () {
-           });
-    }
-});
-appfranchiselogin.factory('errorHttpInterceptor', function ($exceptionHandler, $q) {
-    return {
-        responseError: function responseError(rejection) {
-            $exceptionHandler("An HTTP request error has occurred.\nHTTP config: " + JSON.stringify(rejection.config) + ".\nStatus: " + rejection.status);
-            return $q.reject(rejection);
-        }
-    };
-});
-appfranchiselogin.controller('FranchiseLoginCtrl', function ($scope, $http, $filter) {
-
-    $scope.loader = false;
-
-    $scope.Login = function () {
-
-        $scope.loader = true;
-        $http({
-            method: 'post',
-            url: '../api/Login/FranchiseLogin',
-            headers: { 'Content-Type': 'application/json' },
-            data: { Info: EncriptInfo(JSON.stringify($scope.login)) }
-        })
-       .then(function (logindata) {
-
-           $scope.FranchiseLogin = logindata.data[0];
-           if (parseInt($scope.FranchiseLogin.Loginid) > 0) {
-               sessionStorage.setItem("Fid", ($scope.FranchiseLogin.Loginid).toString());
-               sessionStorage.setItem("FCode", $scope.FranchiseLogin.Username);
-               $scope.SessionsInOut();
-           }
-           else {
-               alertify.alert($scope.FranchiseLogin.Result);
-               $scope.loader = false;
-           }
-       })
-       .catch(function (response) {
-
-           $scope.loader = false;
-           alertify.alert(response.Message);
-       });
-    };
-    $scope.SessionsInOut = function () {
-
-        $scope.UserLoginparams = {};
-        $scope.UserLoginparams.action = 'In';
-        $scope.UserLoginparams.loginid = sessionStorage.getItem("Fid");
-        $scope.UserLoginparams.usertype = 'Franchise';
-        $scope.UserLoginparams.sesid = makeid();
-        $http({
-            method: 'post',
-            url: '../api/Login/SessionsInOut',
-            headers: { 'Content-Type': 'application/json' },
-            data: { Info: EncriptInfo(JSON.stringify($scope.UserLoginparams)) }
-        })
-      .then(function (Response) {
-          sessionStorage.setItem("Sesid", Response.data[0].result);
-          window.location = "Franchise.html";
-      })
-      .catch(function (response) {
-          $scope.loader = false;
-          alertify.alert(response.Message);
-      });
-
-    };
-    $scope.GetForgetPWD = function () {
-        $('#ShowProfileModal').modal('show');
-    }
-    $scope.CheckUserID = function () {
-        $scope.forgetpwdloader = true;
-        $scope.CheckUserIDParams = {};
-        $scope.CheckUserIDParams.action = 'Franchise_FGpwd';
-        $scope.CheckUserIDParams.idno = $scope.txtIdno;
-
-        var reqCheckUserID = {
-            method: 'POST',
-            url: "../api/Admin/CheckUserID",
-            data: { Info: EncriptInfo(JSON.stringify($scope.CheckUserIDParams)) }
-        };
-        $http(reqCheckUserID)
-           .success(function (Response) {
-               $scope.regid = Response[0].regid;
-               if ($scope.regid != "0") {
-                   $scope.GetValue($scope.regid)
-               }
-               else {
-                   $scope.forgetpwdloader = false;
-                   alertify.alert(Response[0].result)
-               };
-           })
-           .error(function (Message) {
-               $scope.forgetpwdloader = false;
-               alertify.alert(Message.Message);
-           });
-    };
-    $scope.GetValue = function (regid) {
-        $scope.getvalparams = {};
-
-        $scope.getvalparams.table = 'tbl_Franchise';
-        $scope.getvalparams.RequiredColumn = 'Password';
-        $scope.getvalparams.IdColumn = 'Fid';
-        $scope.getvalparams.Id = regid.toString();
-
-        var reqMemberProfile = {
-            method: 'POST',
-            url: "../api/Common/GetValue",
-            data: { Info: EncriptInfo(JSON.stringify($scope.getvalparams)) }
-        };
-        $http(reqMemberProfile)
-           .success(function (Response) {
-               if (isUndefinedOrNull(Response) != '') {
-                   $scope.forgetpwdparams = {};
-                   $scope.forgetpwdparams.action = 'Franchise';
-                   $scope.forgetpwdparams.regid = regid.toString();
-                   $scope.forgetpwdparams.pwd = Response;
-                   var reqforgetpwd = {
-                       method: 'POST',
-                       url: "../api/OpenSite/ForGetPassword",
-                       data: { Info: EncriptInfo(JSON.stringify($scope.forgetpwdparams)) }
-                   };
-                   $http(reqforgetpwd)
-                      .success(function (Result) {
-                          if (isUndefinedOrNull(Result) == '') {
-                              alertify.alert('Login Password Send to your Registered Mobile No.');
-                              $('#ShowProfileModal').modal('hide');
-                              $scope.txtIdno = '';
-                              $scope.forgetpwdloader = false;
-                          }
-                          else {
-                              alertify.alert('SMS Send Error');
-                              $scope.forgetpwdloader = false;
-                          }
-
-                      })
-                      .error(function (Message) {
-                          alertify.alert(Message.Message);
-                          $scope.forgetpwdloader = false;
-                      });
-               }
-           })
-           .error(function (Message) {
-               alertify.alert(Message.Message);
-               $scope.forgetpwdloader = false;
-           });
     };
 });

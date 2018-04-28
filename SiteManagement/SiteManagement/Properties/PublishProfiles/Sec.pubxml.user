@@ -6,11 +6,125 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Jaggu\Desktop\Publish_HYD</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Krishang\Desktop\PF_PUBLISH</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
+    <File Include="Admin/Admin.html">
+      <publishTime>04/25/2018 07:04:52</publishTime>
+    </File>
+    <File Include="Admin/Bankers.html">
+      <publishTime>04/26/2018 09:09:05</publishTime>
+    </File>
+    <File Include="Admin/BankersRpt.html">
+      <publishTime>04/26/2018 09:20:52</publishTime>
+    </File>
+    <File Include="Admin/ChangePassword.html">
+      <publishTime>11/19/2017 10:13:13</publishTime>
+    </File>
+    <File Include="Admin/Customers.html">
+      <publishTime>04/26/2018 08:05:56</publishTime>
+    </File>
+    <File Include="Admin/CustomersRpt.html">
+      <publishTime>04/26/2018 08:12:31</publishTime>
+    </File>
+    <File Include="Admin/DailyExpenses.html">
+      <publishTime>04/01/2018 12:19:37</publishTime>
+    </File>
+    <File Include="Admin/DailyExpensesRpt.html">
+      <publishTime>04/01/2018 13:23:50</publishTime>
+    </File>
+    <File Include="Admin/DailyPurchaseRpt.html">
+      <publishTime>04/01/2018 13:23:30</publishTime>
+    </File>
+    <File Include="Admin/DailyPurchases.html">
+      <publishTime>04/01/2018 13:06:02</publishTime>
+    </File>
+    <File Include="Admin/Employee.html">
+      <publishTime>04/01/2018 11:56:35</publishTime>
+    </File>
+    <File Include="Admin/EmployeeRpt.html">
+      <publishTime>04/01/2018 11:56:20</publishTime>
+    </File>
+    <File Include="Admin/ExpenseType.html">
+      <publishTime>03/18/2018 11:53:31</publishTime>
+    </File>
+    <File Include="Admin/ExpenseTypeRpt.html">
+      <publishTime>03/18/2018 11:57:13</publishTime>
+    </File>
+    <File Include="Admin/Index.html">
+      <publishTime>04/01/2018 12:00:55</publishTime>
+    </File>
+    <File Include="Admin/Items.html">
+      <publishTime>04/01/2018 11:59:32</publishTime>
+    </File>
+    <File Include="Admin/ItemsReport.html">
+      <publishTime>04/01/2018 11:59:57</publishTime>
+    </File>
+    <File Include="Admin/LabourPayments.html">
+      <publishTime>03/30/2018 13:39:00</publishTime>
+    </File>
+    <File Include="Admin/LabourPaymentsRpt.html">
+      <publishTime>04/01/2018 11:54:13</publishTime>
+    </File>
+    <File Include="Admin/LogOut.html">
+      <publishTime>11/19/2017 10:13:14</publishTime>
+    </File>
+    <File Include="Admin/POPDF.html">
+      <publishTime>04/21/2018 14:20:19</publishTime>
+    </File>
+    <File Include="Admin/Project.html">
+      <publishTime>04/25/2018 08:06:47</publishTime>
+    </File>
+    <File Include="Admin/ProjectProgress.html">
+      <publishTime>04/01/2018 13:07:34</publishTime>
+    </File>
+    <File Include="Admin/ProjectProgressByImageRpt.html">
+      <publishTime>04/01/2018 19:20:13</publishTime>
+    </File>
+    <File Include="Admin/ProjectProgressRpt.html">
+      <publishTime>04/01/2018 13:23:11</publishTime>
+    </File>
+    <File Include="Admin/ProjectRpt.html">
+      <publishTime>04/25/2018 08:14:36</publishTime>
+    </File>
+    <File Include="Admin/PurchaseOrder.html">
+      <publishTime>04/15/2018 14:11:57</publishTime>
+    </File>
+    <File Include="Admin/PurchaseOrderRpt.html">
+      <publishTime>04/21/2018 14:29:28</publishTime>
+    </File>
+    <File Include="Admin/Railways.html">
+      <publishTime>04/26/2018 09:28:07</publishTime>
+    </File>
+    <File Include="Admin/RailwaysRpt.html">
+      <publishTime>04/26/2018 09:30:26</publishTime>
+    </File>
+    <File Include="Admin/RequestMoney.html">
+      <publishTime>03/30/2018 13:38:13</publishTime>
+    </File>
+    <File Include="Admin/RequestMoneyRpt.html">
+      <publishTime>04/01/2018 11:54:32</publishTime>
+    </File>
+    <File Include="Admin/ResetPassword.html">
+      <publishTime>02/01/2018 14:56:49</publishTime>
+    </File>
+    <File Include="Admin/Unit.html">
+      <publishTime>04/01/2018 11:57:49</publishTime>
+    </File>
+    <File Include="Admin/UnitReport.html">
+      <publishTime>04/01/2018 11:58:42</publishTime>
+    </File>
+    <File Include="Admin/UserLoginReport.html">
+      <publishTime>11/19/2017 10:13:14</publishTime>
+    </File>
+    <File Include="Admin/Vendors.html">
+      <publishTime>04/25/2018 21:37:41</publishTime>
+    </File>
+    <File Include="Admin/VendorsRpt.html">
+      <publishTime>04/26/2018 08:12:44</publishTime>
+    </File>
     <File Include="App/AdminApp.js">
-      <publishTime>02/25/2018 12:34:59</publishTime>
+      <publishTime>04/26/2018 09:28:41</publishTime>
     </File>
     <File Include="App/EncriptInfo.js">
       <publishTime>01/02/2018 12:59:39</publishTime>
@@ -19,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/19/2017 10:00:02</publishTime>
     </File>
     <File Include="App/LoginApp.js">
-      <publishTime>02/25/2018 12:35:08</publishTime>
+      <publishTime>03/31/2018 19:43:25</publishTime>
     </File>
     <File Include="App/StoreApp.js">
       <publishTime>12/20/2017 21:27:41</publishTime>
@@ -28,10 +142,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/19/2017 09:59:03</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>02/25/2018 12:35:46</publishTime>
+      <publishTime>04/26/2018 21:54:15</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>02/25/2018 12:35:46</publishTime>
+      <publishTime>04/26/2018 21:54:15</publishTime>
     </File>
     <File Include="bin/de/Microsoft.Data.Edm.resources.dll">
       <publishTime>11/19/2017 09:58:59</publishTime>
@@ -116,6 +230,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="bin/ru/System.Spatial.resources.dll">
       <publishTime>11/19/2017 09:58:58</publishTime>
+    </File>
+    <File Include="bin/SiteManagement.dll">
+      <publishTime>04/26/2018 21:53:58</publishTime>
     </File>
     <File Include="bin/SQLHelper.dll">
       <publishTime>02/11/2018 14:03:23</publishTime>
@@ -586,13 +703,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/19/2017 10:01:48</publishTime>
     </File>
     <File Include="login.html">
-      <publishTime>02/25/2018 12:23:36</publishTime>
+      <publishTime>04/25/2018 07:06:36</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>11/19/2017 09:59:04</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>02/25/2018 12:35:43</publishTime>
+      <publishTime>04/26/2018 21:54:04</publishTime>
     </File>
     <File Include="SandTStores/Admin.html">
       <publishTime>02/16/2018 08:21:42</publishTime>
@@ -853,13 +970,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/14/2018 08:42:35</publishTime>
     </File>
     <File Include="Styles/style.css">
-      <publishTime>02/16/2018 08:38:43</publishTime>
+      <publishTime>04/01/2018 11:52:00</publishTime>
     </File>
     <File Include="Styles/Validations.css">
       <publishTime>02/14/2018 09:03:10</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/25/2018 12:30:39</publishTime>
+      <publishTime>04/26/2018 21:53:59</publishTime>
     </File>
   </ItemGroup>
 </Project>

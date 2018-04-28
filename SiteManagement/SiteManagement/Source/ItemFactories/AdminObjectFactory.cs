@@ -1249,6 +1249,9 @@ namespace SiteManagement
         {
             Project objEntity = new Project();
 
+            if (!Convert.IsDBNull(reader["PNo"]))
+                objEntity.ID = (Int32)reader["PNo"];
+
             if (!Convert.IsDBNull(reader["ProjectCode"]))
                 objEntity.ProjectCode = (string)reader["ProjectCode"];
 
@@ -1257,6 +1260,10 @@ namespace SiteManagement
 
             if (!Convert.IsDBNull(reader["InCharge"]))
                 objEntity.InCharge = (Int32)reader["InCharge"];
+
+            if (!Convert.IsDBNull(reader["InchargeName"]))
+                objEntity.InchargeName = (string)reader["InchargeName"];
+
 
             if (!Convert.IsDBNull(reader["StartDate"]))
                 objEntity.StartDate = (string)reader["StartDate"];
@@ -1271,7 +1278,7 @@ namespace SiteManagement
                 objEntity.ExpectedEndDate = (string)reader["ExpectedEndDate"];
 
             if (!Convert.IsDBNull(reader["ProjectCost"]))
-                objEntity.ProjectCost = (Int32)reader["ProjectCost"];
+                objEntity.ProjectCost = (decimal)reader["ProjectCost"];
 
             if (!Convert.IsDBNull(reader["Flag"]))
                 objEntity.Flag = (string)reader["Flag"];
@@ -1328,7 +1335,7 @@ namespace SiteManagement
                 objEntity.ExpectedEndDate = (string)reader["ExpectedEndDate"];
 
             if (!Convert.IsDBNull(reader["ProjectCost"]))
-                objEntity.ProjectCost = (Int32)reader["ProjectCost"];
+                objEntity.ProjectCost = (decimal)reader["ProjectCost"];
 
             if (!Convert.IsDBNull(reader["Flag"]))
                 objEntity.Flag = (string)reader["Flag"];
@@ -1359,11 +1366,17 @@ namespace SiteManagement
         {
             Bankers objEntity = new Bankers();
 
+            if (!Convert.IsDBNull(reader["ID"]))
+                objEntity.ID = (Int32)reader["ID"];
+
             if (!Convert.IsDBNull(reader["IFSCCODE"]))
                 objEntity.IFSCCODE = (string)reader["IFSCCODE"];
 
             if (!Convert.IsDBNull(reader["Designation"]))
                 objEntity.Designation = (Int32)reader["Designation"];
+
+            if (!Convert.IsDBNull(reader["Designation_Desc"]))
+                objEntity.Designation_Desc = (string)reader["Designation_Desc"];
 
             if (!Convert.IsDBNull(reader["BankName"]))
                 objEntity.BankName = (string)reader["BankName"];
@@ -1397,6 +1410,9 @@ namespace SiteManagement
         internal static Bankers Edit_Bankers_Factory(SqlDataReader reader)
         {
             Bankers objEntity = new Bankers();
+
+            if (!Convert.IsDBNull(reader["ID"]))
+                objEntity.ID = (Int32)reader["ID"];
 
             if (!Convert.IsDBNull(reader["IFSCCODE"]))
                 objEntity.IFSCCODE = (string)reader["IFSCCODE"];
@@ -1433,6 +1449,9 @@ namespace SiteManagement
         {
             Customers objEntity = new Customers();
 
+            if (!Convert.IsDBNull(reader["ID"]))
+                objEntity.ID = (Int32)reader["ID"];
+
             if (!Convert.IsDBNull(reader["CustCode"]))
                 objEntity.CustCode = (string)reader["CustCode"];
 
@@ -1456,6 +1475,9 @@ namespace SiteManagement
 
             if (!Convert.IsDBNull(reader["State"]))
                 objEntity.State = (Int32)reader["State"];
+
+            if (!Convert.IsDBNull(reader["StateName"]))
+                objEntity.StateName = (string)reader["StateName"];
 
             if (!Convert.IsDBNull(reader["PhoneNo"]))
                 objEntity.PhoneNo = (string)reader["PhoneNo"];
@@ -1495,6 +1517,9 @@ namespace SiteManagement
         internal static Customers Edit_Customers_Factory(SqlDataReader reader)
         {
             Customers objEntity = new Customers();
+
+            if (!Convert.IsDBNull(reader["ID"]))
+                objEntity.ID = (Int32)reader["ID"];
 
             if (!Convert.IsDBNull(reader["CustCode"]))
                 objEntity.CustCode = (string)reader["CustCode"];
@@ -1689,6 +1714,9 @@ namespace SiteManagement
         {
             Railways objEntity = new Railways();
 
+            if (!Convert.IsDBNull(reader["ID"]))
+                objEntity.ID = (Int32)reader["ID"];
+
             if (!Convert.IsDBNull(reader["RailwayCode"]))
                 objEntity.RailwayCode = (string)reader["RailwayCode"];
 
@@ -1704,17 +1732,6 @@ namespace SiteManagement
             if (!Convert.IsDBNull(reader["Flag"]))
                 objEntity.Flag = (string)reader["Flag"];
 
-            if (!Convert.IsDBNull(reader["CreatedBy"]))
-                objEntity.CreatedBy = (Int32)reader["CreatedBy"];
-
-            if (!Convert.IsDBNull(reader["CreatedDate"]))
-                objEntity.CreatedDate = (string)reader["CreatedDate"];
-
-            if (!Convert.IsDBNull(reader["UpdatedBy"]))
-                objEntity.UpdatedBy = (Int32)reader["UpdatedBy"];
-
-            if (!Convert.IsDBNull(reader["UpdatedDate"]))
-                objEntity.UpdatedDate = (string)reader["UpdatedDate"];
 
             return objEntity;
         }
@@ -1734,6 +1751,9 @@ namespace SiteManagement
         {
             Railways objEntity = new Railways();
 
+            if (!Convert.IsDBNull(reader["ID"]))
+                objEntity.ID = (Int32)reader["ID"];
+
             if (!Convert.IsDBNull(reader["RailwayCode"]))
                 objEntity.RailwayCode = (string)reader["RailwayCode"];
 
@@ -1749,18 +1769,7 @@ namespace SiteManagement
             if (!Convert.IsDBNull(reader["Flag"]))
                 objEntity.Flag = (string)reader["Flag"];
 
-            if (!Convert.IsDBNull(reader["CreatedBy"]))
-                objEntity.CreatedBy = (Int32)reader["CreatedBy"];
-
-            if (!Convert.IsDBNull(reader["CreatedDate"]))
-                objEntity.CreatedDate = (string)reader["CreatedDate"];
-
-            if (!Convert.IsDBNull(reader["UpdatedBy"]))
-                objEntity.UpdatedBy = (Int32)reader["UpdatedBy"];
-
-            if (!Convert.IsDBNull(reader["UpdatedDate"]))
-                objEntity.UpdatedDate = (string)reader["UpdatedDate"];
-
+            
             return objEntity;
         }
         #endregion Railways
@@ -1775,6 +1784,9 @@ namespace SiteManagement
         {
             Vendors objEntity = new Vendors();
 
+            if (!Convert.IsDBNull(reader["ID"]))
+                objEntity.ID = (Int32)reader["ID"];
+
             if (!Convert.IsDBNull(reader["VendorCode"]))
                 objEntity.VendorCode = (string)reader["VendorCode"];
 
@@ -1787,6 +1799,9 @@ namespace SiteManagement
             if (!Convert.IsDBNull(reader["PhoneNo"]))
                 objEntity.PhoneNo = (string)reader["PhoneNo"];
 
+            if (!Convert.IsDBNull(reader["EmailID"]))
+                objEntity.EmailID = (string)reader["EmailID"];
+
             if (!Convert.IsDBNull(reader["StreetNo"]))
                 objEntity.StreetNo = (string)reader["StreetNo"];
 
@@ -1798,6 +1813,11 @@ namespace SiteManagement
 
             if (!Convert.IsDBNull(reader["State"]))
                 objEntity.State = (Int32)reader["State"];
+
+            if (!Convert.IsDBNull(reader["StateName"]))
+                objEntity.StateName = (string)reader["StateName"];
+
+            
 
             if (!Convert.IsDBNull(reader["Flag"]))
                 objEntity.Flag = (string)reader["Flag"];
@@ -1843,6 +1863,9 @@ namespace SiteManagement
 
             if (!Convert.IsDBNull(reader["PhoneNo"]))
                 objEntity.PhoneNo = (string)reader["PhoneNo"];
+
+            if (!Convert.IsDBNull(reader["EmailID"]))
+                objEntity.EmailID = (string)reader["EmailID"];
 
             if (!Convert.IsDBNull(reader["StreetNo"]))
                 objEntity.StreetNo = (string)reader["StreetNo"];
